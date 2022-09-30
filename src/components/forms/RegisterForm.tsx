@@ -3,6 +3,8 @@ import { FaUserAlt } from 'react-icons/fa';
 import GoogleButton from '../utilities/GoogleButton';
 import { createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
+import { useNavigate } from 'react-router-dom';
+import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState<string>('');
@@ -11,28 +13,32 @@ export default function RegisterForm() {
   const [regulationsAccepted, setRegulationsAccepted] = useState<boolean>(false);
   const [isRegulationsError, setIsRegulationsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string|null>(null);
-  // TODO: add loading
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Reset state
     setIsRegulationsError(false);
     setErrorMessage(null);
-    // Client validation
-    if (!regulationsAccepted) {
-      setIsRegulationsError(true);
-      return setErrorMessage("Terms and regulations must be accepted");
-    }
-    if (password !== confirmPassword) {
-      return setErrorMessage("Passwords must be the same");
-    }
+    setLoading(true);
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
-      // TODO: implement redux
-    } catch (err) {
-      console.log(err);
-      // TODO: create helper to format firebase error message
+      // Client validation
+      if (!regulationsAccepted) {
+        setIsRegulationsError(true);
+        return setErrorMessage("Terms and regulations must be accepted");
+      }
+      if (password !== confirmPassword) {
+        return setErrorMessage("Passwords must be the same");
+      }
+      // Create user
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (err: any) {
+      console.log(err.code);
+      setErrorMessage(formatFirebaseError(err.code));
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -88,7 +94,7 @@ export default function RegisterForm() {
         <div className="flex flex-col gap-5">
           <button 
             type="submit"
-            className="w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium"
+            className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
           >
             Submit
           </button>
