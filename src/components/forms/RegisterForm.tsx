@@ -1,14 +1,39 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import GoogleButton from '../utilities/GoogleButton';
+import { createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 
 export default function RegisterForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [regulationsAccepted, setRegulationsAccepted] = useState<boolean>(false);
+  const [isRegulationsError, setIsRegulationsError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string|null>(null);
+  // TODO: add loading
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Reset state
+    setIsRegulationsError(false);
+    setErrorMessage(null);
+    // Client validation
+    if (!regulationsAccepted) {
+      setIsRegulationsError(true);
+      return setErrorMessage("Terms and regulations must be accepted");
+    }
+    if (password !== confirmPassword) {
+      return setErrorMessage("Passwords must be the same");
+    }
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(user);
+      // TODO: implement redux
+    } catch (err) {
+      console.log(err);
+      // TODO: create helper to format firebase error message
+    }
   }
 
   const handleGoogleLogin = () => {
@@ -23,6 +48,9 @@ export default function RegisterForm() {
           <h1 className="font-bold text-xl">Create new account</h1>
         </div>
         <div className="flex flex-col gap-5">
+          {errorMessage && (
+            <div className="auth-form-error-message">{errorMessage}</div>
+          )}
           <input
             type="email"
             className="text-input"
@@ -47,8 +75,13 @@ export default function RegisterForm() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          <div className="border-2 border-gray-700 rounded-sm p-3 flex items-center gap-2">
-            <input type="checkbox" id="regulations-input" />
+          <div className={`rounded-sm p-3 flex items-center gap-2 border-2 ${isRegulationsError ? 'border-red-700' : 'border-gray-700'}`}>
+            <input 
+              type="checkbox" 
+              id="regulations-input" 
+              checked={regulationsAccepted}
+              onChange={(e) => setRegulationsAccepted(e.target.checked)} 
+            />
             <label htmlFor="regulations-input">Accept terms and regulations</label>
           </div>
         </div>
