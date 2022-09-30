@@ -7,7 +7,8 @@ interface Props {
 export default function GoogleButton({ onClick }: Props) {
   return (
     <button 
-      className="flex items-center gap-3 rounded-lg px-5 py-4 bg-gray-600 hover:bg-gray-700 shadow-sm font-medium transition-colors"
+      type="button"
+      className="flex items-center justify-center gap-3 rounded-lg px-5 py-2 bg-gray-600 hover:bg-gray-700 shadow-sm font-medium transition-colors"
       onClick={onClick}  
     >
       <FaGoogle />
