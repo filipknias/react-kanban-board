@@ -14,6 +14,7 @@ import { signIn, logout } from './redux/features/authSlice';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './lib/firebase';
+import ModalManager from './components/modals/ModalManager';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ export default function App() {
   
   return (
     <BrowserRouter>
+      <ModalManager />
       <Routes>
         <Route path={routes.index} element={<ProtectedRoute isAuth={isAuth}><Dashboard /></ProtectedRoute>} />
         <Route path={routes.register} element={<PublicRoute isAuth={isAuth}><Register /></PublicRoute>} />
