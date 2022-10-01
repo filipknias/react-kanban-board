@@ -1,4 +1,4 @@
-import { FaThList } from 'react-icons/fa';
+import { FaThList, FaPlus } from 'react-icons/fa';
 
 interface Board {
   id: string;
@@ -14,13 +14,17 @@ export default function BoardsList({ boards }: Props) {
     <ul className="flex flex-col gap-2">
       {boards.map((board) => (
         <li 
-        className="flex items-center gap-3 px-5 py-2 rounded-tr-xl rounded-br-xl font-medium text-lg w-11/12 text-gray-400 transition-colors hover:bg-purple-600 cursor-pointer hover:text-white"
+        className="boards-list-item"
         key={board.id}  
       >
           <FaThList />
           {board.name}
         </li>
       ))}
+      <li className="boards-list-item">
+        <FaPlus />
+        Create new board
+      </li>
     </ul>
   )
 };
