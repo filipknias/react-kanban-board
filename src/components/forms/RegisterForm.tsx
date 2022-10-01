@@ -92,7 +92,7 @@ export default function RegisterForm() {
             />
             <label htmlFor="regulations-input">Accept terms and regulations</label>
           </div>
-          <Link to={routes.signIn} className="font-medium text-purple-500">
+          <Link to={routes.signIn} className="auth-link">
             Sign in to your account
           </Link>
         </div>

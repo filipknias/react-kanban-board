@@ -37,3 +37,7 @@ body {
 .modal-container {
   @apply bg-gray-800 rounded-sm p-5 z-10;
 }
+
+.auth-link {
+  @apply font-medium text-purple-500 block w-min whitespace-nowrap;
+}
