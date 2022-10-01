@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import GoogleButton from '../utilities/GoogleButton';
-import { createUserWithEmailAndPassword  } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { useNavigate } from 'react-router-dom';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
+
+const provider = new GoogleAuthProvider();
 
 export default function RegisterForm() {
   const [email, setEmail] = useState<string>('');
@@ -44,8 +46,8 @@ export default function RegisterForm() {
     }
   }
 
-  const handleGoogleLogin = () => {
-    
+  const handleGoogleLogin = async () => {
+    await signInWithPopup(auth, provider)
   };
 
   return (

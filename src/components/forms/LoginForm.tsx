@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import GoogleButton from '../utilities/GoogleButton';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
+
+const provider = new GoogleAuthProvider();
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
@@ -29,8 +31,8 @@ export default function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = () => {
-      
+  const handleGoogleLogin = async () => {
+    await signInWithPopup(auth, provider);
   };
 
   return (
