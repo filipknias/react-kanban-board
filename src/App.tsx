@@ -8,6 +8,7 @@ import routes from './utilities/routes';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Register from './pages/Register';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import { signIn, logout } from './redux/features/authSlice';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
@@ -35,6 +36,7 @@ export default function App() {
       <Routes>
         <Route path={routes.index} element={<ProtectedRoute isAuth={isAuth}><Dashboard /></ProtectedRoute>} />
         <Route path={routes.register} element={<PublicRoute isAuth={isAuth}><Register /></PublicRoute>} />
+        <Route path={routes.signIn} element={<PublicRoute isAuth={isAuth}><Login /></PublicRoute>} />
       </Routes>
     </BrowserRouter>
   );
