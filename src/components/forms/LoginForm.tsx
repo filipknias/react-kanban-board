@@ -4,6 +4,8 @@ import GoogleButton from '../utilities/GoogleButton';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { Link } from 'react-router-dom';
+import routes from '../../utilities/routes';
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
@@ -58,6 +60,9 @@ export default function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <Link to={routes.register} className="font-medium text-purple-500">
+            Create new account
+          </Link>
         </div>
         <div className="flex flex-col gap-5">
           <button 

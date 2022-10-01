@@ -5,6 +5,8 @@ import { createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { useNavigate } from 'react-router-dom';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { Link } from 'react-router-dom';
+import routes from '../../utilities/routes';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState<string>('');
@@ -90,6 +92,9 @@ export default function RegisterForm() {
             />
             <label htmlFor="regulations-input">Accept terms and regulations</label>
           </div>
+          <Link to={routes.signIn} className="font-medium text-purple-500">
+            Sign in to your account
+          </Link>
         </div>
         <div className="flex flex-col gap-5">
           <button 
