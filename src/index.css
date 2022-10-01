@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-800 text-white px-5;
+  @apply bg-gray-800 text-white;
 }
 
 #root {
