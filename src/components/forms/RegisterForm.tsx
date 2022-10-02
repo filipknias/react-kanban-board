@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import GoogleButton from '../utilities/GoogleButton';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
-import { useNavigate } from 'react-router-dom';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
+import useAsync from '../../hooks/useAsync';
 
 const provider = new GoogleAuthProvider();
 
@@ -17,38 +17,34 @@ export default function RegisterForm() {
   const [regulationsAccepted, setRegulationsAccepted] = useState<boolean>(false);
   const [isRegulationsError, setIsRegulationsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string|null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { loading, error, trigger } = useAsync(async () => {
+    await createUserWithEmailAndPassword(auth, email, password);
+  });
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Reset state
     setIsRegulationsError(false);
     setErrorMessage(null);
-    setLoading(true);
-    try {
-      // Client validation
-      if (!regulationsAccepted) {
-        setIsRegulationsError(true);
-        return setErrorMessage("Terms and regulations must be accepted");
-      }
-      if (password !== confirmPassword) {
-        return setErrorMessage("Passwords must be the same");
-      }
-      // Create user
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err: any) {
-      console.log(err.code);
-      setErrorMessage(formatFirebaseError(err.code));
-    } finally {
-      setLoading(false);
+    // Client validation
+    if (!regulationsAccepted) {
+      setIsRegulationsError(true);
+      return setErrorMessage("Terms and regulations must be accepted");
     }
+    if (password !== confirmPassword) {
+      return setErrorMessage("Passwords must be the same");
+    }
+    // Trigger create user function
+    trigger();
   }
 
   const handleGoogleLogin = async () => {
     await signInWithPopup(auth, provider)
   };
+
+  useEffect(() => {
+    if (error !== null) setErrorMessage(formatFirebaseError(error));
+  }, [error]);
 
   return (
     <form className="auth-form-container" onSubmit={handleSubmit}>

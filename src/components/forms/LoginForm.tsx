@@ -6,29 +6,20 @@ import { auth } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
+import useAsync from '../../hooks/useAsync';
 
 const provider = new GoogleAuthProvider();
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string|null>(null);
-  const [loading, setLoading] = useState<boolean>(false); 
-  
-  const handleSubmit = async (e: React.FormEvent) => {
+  const { loading, error, trigger } = useAsync(async () => {
+    await signInWithEmailAndPassword(auth, email, password);
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Reset state 
-    setErrorMessage(null);
-    setLoading(true);
-    try {
-      // Sign in user
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err: any) {
-      console.log(err);
-      setErrorMessage(formatFirebaseError(err.code));
-    } finally {
-      setLoading(false);
-    }
+    trigger();
   };
 
   const handleGoogleLogin = async () => {
@@ -43,8 +34,8 @@ export default function LoginForm() {
           <h1 className="font-bold text-xl">Sign in to your account</h1>
         </div>
         <div className="flex flex-col gap-5">
-          {errorMessage && (
-            <div className="auth-form-error-message">{errorMessage}</div>
+          {error && (
+            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
           )}
           <input
             type="email"
