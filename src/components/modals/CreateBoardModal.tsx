@@ -5,7 +5,7 @@ import useAsync from '../../hooks/useAsync';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { hideModal } from '../../redux/features/modalsSlice';
 
 interface Column {
@@ -16,11 +16,17 @@ interface Column {
 export default function CreateBoardModal() {
   const [name, setName] = useState<string>('');
   const [columns, setColumns] = useState<Column[]>([{ idx: 0, name: '' }]);
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
   const { trigger, error, loading, success } = useAsync(async () => {
+    if (user === null) return;
     // Save board
-    const boardRef = await addDoc(collection(db, "boards"), { name, createdAt: timestamp });
+    const boardRef = await addDoc(collection(db, "boards"), {
+      name, 
+      userId: user.uid, 
+      createdAt: timestamp 
+    });
     // Save columns
     const validColumns = columns.filter(({ name }) => name.trim() !== "");
     validColumns.forEach(async ({ name }) => {
