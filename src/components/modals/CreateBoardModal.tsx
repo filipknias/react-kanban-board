@@ -1,27 +1,114 @@
 import Modal from "./Modal"
+import { useEffect, useState } from 'react';
+import { BsXLg } from 'react-icons/bs';
+import useAsync from '../../hooks/useAsync';
+import { addDoc, collection } from 'firebase/firestore';
+import { db, timestamp } from '../../lib/firebase';
+import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { useAppDispatch } from '../../redux/hooks';
+import { hideModal } from '../../redux/features/modalsSlice';
+
+interface Column {
+  idx: number;
+  name: string;
+}
 
 export default function CreateBoardModal() {
+  const [name, setName] = useState<string>('');
+  const [columns, setColumns] = useState<Column[]>([{ idx: 0, name: '' }]);
+  const dispatch = useAppDispatch();
+
+  const { trigger, error, loading, success } = useAsync(async () => {
+    // Save board
+    const boardRef = await addDoc(collection(db, "boards"), { name, createdAt: timestamp });
+    // Save columns
+    const validColumns = columns.filter(({ name }) => name.trim() !== "");
+    validColumns.forEach(async ({ name }) => {
+      await addDoc(collection(db, "columns"), {
+        name, 
+        boardId: boardRef.id,
+        createdAt: timestamp,
+      });
+    });
+  });
+
+  const updateColumnName = (idx: number, name: string) => {
+    setColumns(prevColumns => {
+      return prevColumns.map((column) => {
+        if (column.idx === idx) return { ...column, name };
+        return column;
+      });
+    });
+  };
+
+  const addColumn = () => {
+    setColumns((prevColumns) => [...prevColumns, { idx: prevColumns.length, name: '' }]);
+  };
+
+  const deleteColumn = (idx: number) => {
+    if (columns.length === 1) return;
+    setColumns((prevColumns) => {
+      const newColumns = prevColumns.filter((column) => column.idx !== idx);
+      return newColumns.map((column, index) => ({ ...column, idx: index }));
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    trigger();
+  };
+
+  useEffect(() => {
+    // Hide modal on success
+    if (success) dispatch(hideModal());
+    // TODO: set new boards as selected
+  }, [success]);
+
   return (
     <Modal>
       <form className="modal-container flex flex-col gap-5">
         <h1 className="text-lg font-medium">Add New Board</h1>
         <div className="flex flex-col gap-3">
+          {error && (
+            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+          )}
           <input 
             type="text"
             className="text-input"
             placeholder="Name"
             required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-          <input 
-            type="text"
-            className="text-input"
-            placeholder="Column"
-            required
-          />
+          {columns.map(({ idx, name }) => (
+            <div key={idx} className="flex items-center gap-3">
+              <input 
+                type="text"
+                className="text-input"
+                placeholder="Column"
+                required
+                value={name}
+                onChange={(e) => updateColumnName(idx, e.target.value)}
+              />
+              {columns.length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteColumn(idx)} />}
+            </div>
+          ))}
         </div>
         <div className="flex flex-col gap-3">
-          <button type="submit" className="bg-white rounded-sm py-2 px-5 w-full text-purple-700 font-medium hover:bg-opacity-80 transition-colors">Add New Column</button>
-          <button type="submit" className="bg-purple-700 rounded-sm py-2 px-5 w-full text-white font-medium transition-colors hover:bg-purple-800">Create New Board</button>
+          <button 
+            type="button" 
+            className={`bg-white rounded-sm py-2 px-5 w-full text-purple-700 font-medium hover:bg-opacity-80 transition-colors ${loading ? "btn-loading" : " "}`}
+            onClick={addColumn}
+          >
+            Add New Column
+          </button>
+          <button 
+            type="submit" 
+            className={`bg-purple-700 rounded-sm py-2 px-5 w-full text-white font-medium transition-colors hover:bg-purple-800 ${loading ? "btn-loading" : ""}`}
+            onClick={handleSubmit}
+          >
+            Create New Board
+          </button>
         </div>
       </form>
     </Modal>
