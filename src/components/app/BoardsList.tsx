@@ -2,11 +2,7 @@ import { FaThList, FaPlus } from 'react-icons/fa';
 import { useAppDispatch } from '../../redux/hooks';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import { openModal } from '../../redux/features/modalsSlice';
-
-interface Board {
-  id: string;
-  name: string;
-}
+import { Board } from '../../utilities/types';
 
 interface Props {
   boards: Board[];
