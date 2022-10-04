@@ -1,12 +1,31 @@
+import { useState, useEffect } from 'react';
 import Logo from '../../components/utilities/Logo';
 import BoardsList from './BoardsList';
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { auth, db } from '../../lib/firebase';
 import { useAppSelector } from '../../redux/hooks';
+import { Board } from '../../utilities/types';
+import { collection, query, where, onSnapshot, CollectionReference } from "firebase/firestore";
 
 export default function Sidebar() {
-  const boards = useAppSelector((state) => state.dashboard.boards);
+  const [boards, setBoards] = useState<Board[]>([]);
+  const user = useAppSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (user === null) return; 
+
+    const q = query(collection(db, "boards") as CollectionReference<Board>, where("userId", "==", user.uid));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const boards: Board[] = [];
+      querySnapshot.forEach((doc) => {
+        boards.push({ ...doc.data(), id: doc.id });
+      });
+      setBoards(boards);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
 
   return (
     <div className="bg-gray-800 border-r-2 border-r-gray-700 h-full w-1/5 flex flex-col">
