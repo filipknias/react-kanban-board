@@ -33,6 +33,7 @@ export default function CreateBoardModal() {
       await addDoc(collection(db, "columns"), {
         name, 
         boardId: boardRef.id,
+        userId: user.uid,
         createdAt: timestamp,
       });
     });

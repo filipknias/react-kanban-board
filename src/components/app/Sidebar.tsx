@@ -1,20 +1,12 @@
-import { useState } from 'react';
 import Logo from '../../components/utilities/Logo';
 import BoardsList from './BoardsList';
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
-import { auth, db } from '../../lib/firebase';
+import { auth } from '../../lib/firebase';
 import { useAppSelector } from '../../redux/hooks';
-import { Board } from '../../utilities/types';
-import { collection, query, where, CollectionReference } from "firebase/firestore";
-import useFirestoreListener from '../../hooks/useFirestoreListener';
 
 export default function Sidebar() {
-  const [boards, setBoards] = useState<Board[]>([]);
-  const user = useAppSelector((state) => state.auth.user);
-
-  const boardsQuery = query(collection(db, "boards") as CollectionReference<Board>, where("userId", "==", user?.uid));
-  useFirestoreListener<Board>(boardsQuery, (data) => setBoards(data));
+  const { boards } = useAppSelector((state) => state.dashboard);
 
   return (
     <div className="bg-gray-800 border-r-2 border-r-gray-700 h-full w-1/5 flex flex-col">
