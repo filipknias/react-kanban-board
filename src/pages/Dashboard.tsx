@@ -17,8 +17,8 @@ export default function Dashboard() {
 
   // Firestore listeners
   useFirestoreListener<Board>(boardsQuery, (boards) => dispatch(setBoards(boards)));
-  useFirestoreListener<Column>(columnsQuery, (boards) => dispatch(setColumns(boards)));
-  useFirestoreListener<Task>(tasksQuery, (boards) => dispatch(setTasks(boards)));
+  useFirestoreListener<Column>(columnsQuery, (columns) => dispatch(setColumns(columns)));
+  useFirestoreListener<Task>(tasksQuery, (tasks) => dispatch(setTasks(tasks)));
 
   return (
     <div className="flex h-full">
