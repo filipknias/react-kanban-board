@@ -1,4 +1,5 @@
 import Sidebar from "../components/app/Sidebar";
+import Appbar from "../components/app/Appbar";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setBoards, setColumns, setTasks } from "../redux/features/dashboardSlice";
 import useFirestoreListener from '../hooks/useFirestoreListener';
@@ -24,7 +25,7 @@ export default function Dashboard() {
     <div className="flex h-full">
       <Sidebar />
       <div className="flex-1">
-        {/* CONTENT */}
+        <Appbar />
       </div>
     </div>
   );
