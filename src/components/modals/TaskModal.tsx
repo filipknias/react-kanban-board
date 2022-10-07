@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import SubtasksList from '../app/SubtasksList';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from '../../lib/firebase';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 
 interface Props {
   task: Task;
@@ -26,7 +27,17 @@ export default function TaskModal({ task }: Props) {
   return (
     <Modal>
       <div className="flex flex-col gap-5">
-        <h1 className="text-lg font-medium">{task.name}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-medium">{task.name}</h1>
+          <div className="flex gap-3">
+            <button className="bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600">
+              <FaEdit />
+            </button>
+            <button className="bg-red-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-red-600">
+              <FaTrash />
+            </button>
+          </div>
+        </div>
         <p className="text-sm text-gray-400">{task.description ? task.description : "No description"}</p>
         {task.subtasks.length > 0 && <SubtasksList subtasks={task.subtasks} taskId={task.id} />}
         <div className="flex flex-col gap-2">
