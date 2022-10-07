@@ -47,7 +47,7 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
         if (formData === undefined) return;
         const taskRef = doc(db, "tasks", formData.id);
         await updateDoc(taskRef, {
-          title, 
+          name: title, 
           description: descriptionData, 
           columnId, 
           subtasks: formattedSubtasks,
@@ -107,7 +107,6 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
           className="text-input"
           placeholder="Title"
           required
-          defaultValue={formData?.name}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />

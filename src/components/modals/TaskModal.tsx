@@ -7,8 +7,9 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../../lib/firebase';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import useAsync from '../../hooks/useAsync';
-import { hideModal } from '../../redux/features/modalsSlice';
+import { hideModal, openModal } from '../../redux/features/modalsSlice';
 import { useAppDispatch } from '../../redux/hooks';
+import EditTaskModal from './EditTaskModal';
 
 interface Props {
   task: Task;
@@ -43,7 +44,10 @@ export default function TaskModal({ task }: Props) {
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-medium">{task.name}</h1>
           <div className="flex gap-3">
-            <button className={`bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600 ${loading ? "btn-loading" : " "}`}>
+            <button 
+              className={`bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600 ${loading ? "btn-loading" : " "}`}
+              onClick={() => dispatch(openModal(<EditTaskModal task={task} />))}  
+            >
               <FaEdit />
             </button>
             <button 
