@@ -8,6 +8,7 @@ import { db } from "../lib/firebase";
 import { Board, Column as ColumnType, Task } from "../utilities/types";
 import useSelectedBoard from "../hooks/useSelectedBoard";
 import Column from '../components/app/Column';
+import { FaPlus } from 'react-icons/fa';
 
 export default function Dashboard() {
   const user = useAppSelector((state) => state.auth.user);
@@ -36,6 +37,10 @@ export default function Dashboard() {
               {columns.map((column) => (
                 <Column column={column} key={column.id} />
               ))}
+              <div className="bg-gray-800 w-64 rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700">
+                <FaPlus />
+                <h1 className="font-medium text-xl">Add column</h1>
+              </div>
             </div>
           </div>  
         </div>
