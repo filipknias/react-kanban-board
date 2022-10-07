@@ -28,7 +28,7 @@ export default function TaskModal({ task }: Props) {
       <div className="flex flex-col gap-5">
         <h1 className="text-lg font-medium">{task.name}</h1>
         <p className="text-sm text-gray-400">{task.description ? task.description : "No description"}</p>
-        <SubtasksList subtasks={task.subtasks} taskId={task.id} />
+        {task.subtasks.length > 0 && <SubtasksList subtasks={task.subtasks} taskId={task.id} />}
         <div className="flex flex-col gap-2">
           <label htmlFor="column-id" className="font-medium">Current Status</label>
           <select 
