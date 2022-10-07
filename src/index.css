@@ -49,3 +49,7 @@ body {
 .modal-form-btn {
   @apply bg-purple-700 rounded-sm py-2 px-5 w-full text-white font-medium transition-colors hover:bg-purple-800;
 }
+
+.modal-form-light-btn {
+  @apply bg-white rounded-sm py-2 px-5 w-full text-purple-700 font-medium hover:bg-opacity-80 transition-colors;
+}

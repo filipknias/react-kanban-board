@@ -107,7 +107,7 @@ export default function CreateBoardModal() {
         <div className="flex flex-col gap-3">
           <button 
             type="button" 
-            className={`bg-white rounded-sm py-2 px-5 w-full text-purple-700 font-medium hover:bg-opacity-80 transition-colors ${loading ? "btn-loading" : " "}`}
+            className={`modal-form-light-btn ${loading ? "btn-loading" : " "}`}
             onClick={addColumn}
           >
             Add New Column
