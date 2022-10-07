@@ -1,6 +1,7 @@
 import { Column as ColumnType } from '../../utilities/types';
 import { useMemo } from 'react';
 import useSelectedBoard from '../../hooks/useSelectedBoard';
+import Task from './Task';
 
 interface Props {
   column: ColumnType;
@@ -16,8 +17,8 @@ export default function Column({ column }: Props) {
   return (
     <div className="flex flex-col gap-3 w-64">
       <h1 className="font-bold text-gray-400 uppercase">{column.name}</h1>
-      <div className={`h-full rounded-md border-2 border-gray-700 p-2 ${columnTasks.length === 0 ? 'border-dashed' : ''}`}>
-        {/* TASKS */}
+      <div className={`h-full rounded-md ${columnTasks.length === 0 ? 'border-dashed border-2 border-gray-700' : ''}`}>
+        {columnTasks.map((task) => <Task task={task} key={task.id} />)}
       </div>
     </div>
   )
