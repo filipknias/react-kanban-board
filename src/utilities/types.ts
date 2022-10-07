@@ -30,3 +30,5 @@ export interface Subtask {
   name: string;
   done: boolean;
 }
+
+export type SubmitAction = "create" | "update";

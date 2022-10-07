@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Subtask, Task } from "../../utilities/types";
+import { Subtask, Task, SubmitAction } from "../../utilities/types";
 import useSelectedBoard from '../../hooks/useSelectedBoard';
 import { BsXLg } from 'react-icons/bs';
 import useAsync from '../../hooks/useAsync';
@@ -7,8 +7,6 @@ import { useAppSelector } from '../../redux/hooks';
 import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
-
-type SubmitAction = "create" | "update";
 
 interface Props {
   formData?: Task;
