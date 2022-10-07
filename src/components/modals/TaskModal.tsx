@@ -3,6 +3,8 @@ import { Task } from "../../utilities/types";
 import useSelectedBoard from '../../hooks/useSelectedBoard';
 import { useState, useEffect } from 'react';
 import SubtasksList from '../app/SubtasksList';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from '../../lib/firebase';
 
 interface Props {
   task: Task;
@@ -17,7 +19,8 @@ export default function TaskModal({ task }: Props) {
   }, [columnId]);
 
   const updateColumnId = async (id: string) => {
-    
+    const taskRef = doc(db, "tasks", task.id);
+    await updateDoc(taskRef, { columnId: id });
   };
 
   return (
