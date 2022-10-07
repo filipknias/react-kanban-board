@@ -7,6 +7,7 @@ import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { hideModal } from '../../redux/features/modalsSlice';
+import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
 
 interface Column {
   idx: number;
@@ -37,6 +38,9 @@ export default function CreateBoardModal() {
         createdAt: timestamp,
       });
     });
+
+    // Set new board as selected
+    dispatch(setSelectedBoardId(boardRef.id));
   });
 
   const updateColumnName = (idx: number, name: string) => {
@@ -68,12 +72,11 @@ export default function CreateBoardModal() {
   useEffect(() => {
     // Hide modal on success
     if (success) dispatch(hideModal());
-    // TODO: set new boards as selected
   }, [success]);
 
   return (
     <Modal>
-      <form className="modal-container flex flex-col gap-5">
+      <form className="modal-container flex flex-col gap-5" onSubmit={handleSubmit}>
         <h1 className="text-lg font-medium">Add New Board</h1>
         <div className="flex flex-col gap-3">
           {error && (
@@ -109,11 +112,7 @@ export default function CreateBoardModal() {
           >
             Add New Column
           </button>
-          <button 
-            type="submit" 
-            className={`bg-purple-700 rounded-sm py-2 px-5 w-full text-white font-medium transition-colors hover:bg-purple-800 ${loading ? "btn-loading" : ""}`}
-            onClick={handleSubmit}
-          >
+          <button type="submit" className={`modal-form-btn ${loading ? "btn-loading" : ""}`}>
             Create New Board
           </button>
         </div>

@@ -45,3 +45,7 @@ body {
 .auth-link {
   @apply font-medium text-purple-500 block w-min whitespace-nowrap;
 }
+
+.modal-form-btn {
+  @apply bg-purple-700 rounded-sm py-2 px-5 w-full text-white font-medium transition-colors hover:bg-purple-800;
+}
