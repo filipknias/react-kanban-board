@@ -23,12 +23,14 @@ export default function AddTaskModal() {
   const { trigger, error, loading, success } = useAsync(async () => {
     if (user === null || selectedBoardId === null) return;
 
+    const validSubtasks = subtasks.filter((task) => task.name !== "");
+
     await addDoc(collection(db, "tasks"), {
       name: title,
       description: description.length === 0 ? null : description,
       columnId,
       userId: user.uid, 
-      subtasks,
+      subtasks: validSubtasks,
       createdAt: timestamp 
     });
   });
@@ -101,7 +103,6 @@ export default function AddTaskModal() {
                   type="text"
                   className="text-input"
                   placeholder="Subtask name"
-                  required
                   value={name}
                   onChange={(e) => updateSubtaskName(idx, e.target.value)}
                 />
