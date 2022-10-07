@@ -3,9 +3,12 @@ import { Task } from "../../utilities/types";
 import useSelectedBoard from '../../hooks/useSelectedBoard';
 import { useState, useEffect } from 'react';
 import SubtasksList from '../app/SubtasksList';
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../../lib/firebase';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import useAsync from '../../hooks/useAsync';
+import { hideModal } from '../../redux/features/modalsSlice';
+import { useAppDispatch } from '../../redux/hooks';
 
 interface Props {
   task: Task;
@@ -14,10 +17,20 @@ interface Props {
 export default function TaskModal({ task }: Props) {
   const [columnId, setColumnId] = useState<string>(task.columnId);
   const { columns } = useSelectedBoard();
+  const dispatch = useAppDispatch();
+
+  const { trigger, success, loading } = useAsync(async () => {
+    const taskRef = doc(db, "tasks", task.id);
+    await deleteDoc(taskRef);
+  });
 
   useEffect(() => {
     updateColumnId(columnId);
   }, [columnId]);
+
+  useEffect(() => {
+    if (success) dispatch(hideModal());
+  }, [success]);
 
   const updateColumnId = async (id: string) => {
     const taskRef = doc(db, "tasks", task.id);
@@ -30,10 +43,13 @@ export default function TaskModal({ task }: Props) {
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-medium">{task.name}</h1>
           <div className="flex gap-3">
-            <button className="bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600">
+            <button className={`bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600 ${loading ? "btn-loading" : " "}`}>
               <FaEdit />
             </button>
-            <button className="bg-red-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-red-600">
+            <button 
+              className={`bg-red-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-red-600 ${loading ? "btn-loading" : " "}`}
+              onClick={trigger}  
+            >
               <FaTrash />
             </button>
           </div>
