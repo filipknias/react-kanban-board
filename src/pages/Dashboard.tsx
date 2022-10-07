@@ -5,7 +5,9 @@ import { setBoards, setColumns, setTasks } from "../redux/features/dashboardSlic
 import useFirestoreListener from '../hooks/useFirestoreListener';
 import { collection, query, where } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { Board, Column, Task } from "../utilities/types";
+import { Board, Column as ColumnType, Task } from "../utilities/types";
+import useSelectedBoard from "../hooks/useSelectedBoard";
+import Column from '../components/app/Column';
 
 export default function Dashboard() {
   const user = useAppSelector((state) => state.auth.user);
@@ -18,14 +20,25 @@ export default function Dashboard() {
 
   // Firestore listeners
   useFirestoreListener<Board>(boardsQuery, (boards) => dispatch(setBoards(boards)));
-  useFirestoreListener<Column>(columnsQuery, (columns) => dispatch(setColumns(columns)));
+  useFirestoreListener<ColumnType>(columnsQuery, (columns) => dispatch(setColumns(columns)));
   useFirestoreListener<Task>(tasksQuery, (tasks) => dispatch(setTasks(tasks)));
+
+  const { columns } = useSelectedBoard();
 
   return (
     <div className="flex h-full">
       <Sidebar />
       <div className="flex-1">
-        <Appbar />
+        <div className="flex flex-col h-full">
+          <Appbar />
+          <div className="flex-1 p-5">
+            <div className="flex gap-10 h-full">
+              {columns.map((column) => (
+                <Column column={column} key={column.id} />
+              ))}
+            </div>
+          </div>  
+        </div>
       </div>
     </div>
   );
