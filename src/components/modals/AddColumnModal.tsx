@@ -36,7 +36,7 @@ export default function AddColumnModal() {
 
   return (
     <Modal>
-      <form className="modal-container flex flex-col gap-5" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <h1 className="text-lg font-medium">Add Column</h1>
         <div className="flex flex-col gap-3">
           {error && (

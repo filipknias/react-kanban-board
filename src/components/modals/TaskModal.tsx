@@ -21,7 +21,7 @@ export default function TaskModal({ task }: Props) {
 
   return (
     <Modal>
-      <div className="modal-container flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <h1 className="text-lg font-medium">{task.name}</h1>
         <p className="text-sm text-gray-400">{task.description ? task.description : "No description"}</p>
         {/* SUBTASKS LIST COMPONENT */}
