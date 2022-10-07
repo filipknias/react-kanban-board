@@ -26,6 +26,7 @@ export interface Task {
 }
 
 export interface Subtask {
+  idx: number;
   name: string;
   done: boolean;
 }

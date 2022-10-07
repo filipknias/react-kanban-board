@@ -53,3 +53,7 @@ body {
 .modal-form-light-btn {
   @apply bg-white rounded-sm py-2 px-5 w-full text-purple-700 font-medium hover:bg-opacity-80 transition-colors;
 }
+
+.select-input {
+  @apply bg-gray-700 outline-none cursor-pointer p-2;
+}
