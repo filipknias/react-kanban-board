@@ -3,6 +3,7 @@ import { FaPlus, FaCog } from 'react-icons/fa';
 import AddTaskModal from '../modals/AddTaskModal';
 import { useAppDispatch } from "../../redux/hooks";
 import { openModal } from "../../redux/features/modalsSlice";
+import EditBoardModal from '../modals/EditBoardModal';
 
 export default function Appbar() {
   const { board } = useSelectedBoard();
@@ -21,7 +22,10 @@ export default function Appbar() {
               <FaPlus />
               <span className="hidden lg:block">Add Task</span>
             </button>
-            <button className="bg-purple-600 rounded-sm p-3 text-white flex items-center gap-2 transition-colors hover:bg-purple-700 font-medium">
+            <button 
+              className="bg-purple-600 rounded-sm p-3 text-white flex items-center gap-2 transition-colors hover:bg-purple-700 font-medium"
+              onClick={() => dispatch(openModal(<EditBoardModal board={board} />))}  
+            >
               <FaCog />
               <span className="hidden lg:block">Options</span>
             </button>

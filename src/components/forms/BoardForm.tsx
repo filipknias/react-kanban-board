@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Board, SubmitAction, Column } from "../../utilities/types";
 import { BsXLg } from 'react-icons/bs';
 import useAsync from '../../hooks/useAsync';
-import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
+import { addDoc, collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -18,7 +18,7 @@ interface Props {
   onSuccess?: () => void;
 }
 
-interface LocalColumn {
+interface NewColumn {
   idx: number;
   name: string;
 }
@@ -28,14 +28,14 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState<string>(() => formData?.board.name || '');
-  const [localColumns, setLocalColumns] = useState<LocalColumn[]>(() => {
-    if (formData) return formData.columns.map((column, index) => ({ idx: index, name: column.name }));
-    return [{ idx: 0, name: '' }];
-  });
+  // New added in form columns
+  const [newColumns, setNewColumns] = useState<NewColumn[]>([{ idx: 0, name: '' }]);
+  // Columns from formData props
+  const [formDataColumns, setFormDataColumns] = useState<Column[]>(formData?.columns || []);
 
   const { trigger, error, loading, success } = useAsync(async () => {
     if (user === null) return;
-    const validColumns = localColumns.filter(({ name }) => name.trim() !== "");
+    const validColumns = newColumns.filter(({ name }) => name.trim() !== "");
 
     switch (action) {
       case "create": {
@@ -60,16 +60,34 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         break;
       };
       case "update": {
-        // if (formData === undefined) return;
-        // const boardRef = doc(db, "boards", formData.id);
-        // // Update board data
-        // await updateDoc(boardRef, { name });
-        // // Update columns data
-        // localColumns.forEach(async (column) => {
-        //   const columnRef = doc(db, "columns", )
-        // });
+        if (formData === undefined) return;
+        // Update board data
+        const boardRef = doc(db, "boards", formData.board.id);
+        await updateDoc(boardRef, { name });
+        // Update columns data
+        formData.columns.forEach(async (column) => {
+          const columnRef = doc(db, "columns", column.id);
+          // Check if column was deleted
+          if (!formDataColumns.includes(column)) await deleteDoc(columnRef); 
+          else {
+            // Update name changes
+            const columnIndex = formDataColumns.indexOf(column);
+            const columnName = formDataColumns[columnIndex].name;
+            await updateDoc(columnRef, { name: columnName });
+          }
+        });
+        // Save new columns in firestore
+        validColumns.forEach(async (column) => {
+          const boardId = formData.board.id;
+          await addDoc(collection(db, "columns"), {
+            name: column.name,
+            boardId,
+            userId: user.uid,
+            createdAt: timestamp,
+          });
+        });
         break;
-      }
+      };
     }
   });
 
@@ -78,8 +96,8 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
     if (success) onSuccess();
   }, [success]);
 
-  const updateColumnName = (idx: number, name: string) => {
-    setLocalColumns(prevColumns => {
+  const updateNewColumnName = (idx: number, name: string) => {
+    setNewColumns(prevColumns => {
       return prevColumns.map((column) => {
         if (column.idx === idx) return { ...column, name };
         return column;
@@ -87,16 +105,28 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
     });
   };
 
-  const addColumn = () => {
-    setLocalColumns((prevColumns) => [...prevColumns, { idx: prevColumns.length, name: '' }]);
+  const updateFormDataColumnName = (id: string, name: string) => {
+    setFormDataColumns(prevColumns => {
+      return prevColumns.map((column) => {
+        if (column.id === id) return { ...column, name };
+        return column;
+      });
+    });
   };
 
-  const deleteColumn = (idx: number) => {
-    if (localColumns.length === 1) return;
-    setLocalColumns((prevColumns) => {
+  const addNewColumn = () => {
+    setNewColumns((prevColumns) => [...prevColumns, { idx: prevColumns.length, name: '' }]);
+  };
+
+  const deleteNewColumn = (idx: number) => {
+    setNewColumns((prevColumns) => {
       const newColumns = prevColumns.filter((column) => column.idx !== idx);
       return newColumns.map((column, index) => ({ ...column, idx: index }));
     });
+  };
+
+  const deleteFormDataColumn = (id: string) => {
+    setFormDataColumns((prevColumns) => prevColumns.filter((column) => column.id !== id));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -118,16 +148,28 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        {localColumns.map(({ idx, name }) => (
+        {formDataColumns.map(({ id, name }) => (
+          <div key={id} className="flex items-center gap-3">
+            <input 
+              type="text"
+              className="text-input"
+              placeholder="Column"
+              value={name}
+              onChange={(e) => updateFormDataColumnName(id, e.target.value)}
+            />
+            {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteFormDataColumn(id)} />}
+          </div>
+        ))}
+        {newColumns.map(({ idx, name }) => (
           <div key={idx} className="flex items-center gap-3">
             <input 
               type="text"
               className="text-input"
               placeholder="Column"
               value={name}
-              onChange={(e) => updateColumnName(idx, e.target.value)}
+              onChange={(e) => updateNewColumnName(idx, e.target.value)}
             />
-            {localColumns.length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteColumn(idx)} />}
+            {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteNewColumn(idx)} />}
           </div>
         ))}
       </div>
@@ -135,7 +177,7 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         <button 
           type="button" 
           className={`modal-form-light-btn ${loading ? "btn-loading" : " "}`}
-          onClick={addColumn}
+          onClick={addNewColumn}
         >
           Add New Column
         </button>
