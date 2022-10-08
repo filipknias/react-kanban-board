@@ -10,7 +10,7 @@ export default function Appbar() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="bg-gray-800 border-b-2 border-b-gray-700 py-8 px-5 h-24 flex items-center justify-between w-screen">
+    <div className="bg-gray-800 border-b-2 border-b-gray-700 py-8 px-5 h-24 flex items-center justify-between w-screen lg:w-auto">
       {board && (
         <>
           <div className="flex items-center gap-3">
