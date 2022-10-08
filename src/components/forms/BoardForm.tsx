@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Board, SubmitAction, Column } from "../../utilities/types";
+import { Board, SubmitAction, Column, Task } from "../../utilities/types";
 import { BsXLg } from 'react-icons/bs';
 import useAsync from '../../hooks/useAsync';
 import { addDoc, collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
@@ -7,9 +7,11 @@ import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
+
 interface FormData {
   board: Board;
   columns: Column[];
+  tasks: Task[];
 }
 
 interface Props {
@@ -68,7 +70,14 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         formData.columns.forEach(async (column) => {
           const columnRef = doc(db, "columns", column.id);
           // Check if column was deleted
-          if (!formDataColumns.includes(column)) await deleteDoc(columnRef); 
+          if (!formDataColumns.includes(column)) {
+            // Delete column and tasks
+            await deleteDoc(columnRef); 
+            formData.tasks.forEach(async (task) => {
+              const taskRef = doc(db, "tasks", task.id);
+              await deleteDoc(taskRef);
+            });
+          }
           else {
             // Update name changes
             const columnIndex = formDataColumns.indexOf(column);

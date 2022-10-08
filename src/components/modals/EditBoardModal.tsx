@@ -54,7 +54,7 @@ export default function EditBoard({ board }: Props) {
           <BoardForm 
             action="update"
             onSuccess={() => dispatch(hideModal())}
-            formData={{ board, columns }} 
+            formData={{ board, columns, tasks }} 
           />
         </div>
         <button 
