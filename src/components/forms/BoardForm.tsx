@@ -70,7 +70,8 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         formData.columns.forEach(async (column) => {
           const columnRef = doc(db, "columns", column.id);
           // Check if column was deleted
-          if (!formDataColumns.includes(column)) {
+          const formDataColumn = formDataColumns.find((c) => c.id === column.id);
+          if (!formDataColumn) {
             // Delete column and tasks
             await deleteDoc(columnRef); 
             formData.tasks.forEach(async (task) => {
@@ -78,12 +79,11 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
               await deleteDoc(taskRef);
             });
           }
-          else {
-            // Update name changes
-            const columnIndex = formDataColumns.indexOf(column);
-            const columnName = formDataColumns[columnIndex].name;
-            await updateDoc(columnRef, { name: columnName });
-          }
+        });
+        // Update name changes
+        formDataColumns.forEach(async (column) => {
+          const columnRef = doc(db, "columns", column.id);
+          await updateDoc(columnRef, { name: column.name });
         });
         // Save new columns in firestore
         validColumns.forEach(async (column) => {
