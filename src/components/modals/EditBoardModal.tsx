@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import BoardForm from "../forms/BoardForm";
 import useSelectedBoard from '../../hooks/useSelectedBoard';
 import { Board } from '../../utilities/types';
@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function EditBoard({ board }: Props) {
+  const boards = useAppSelector((state) => state.dashboard.boards);
   const dispatch = useAppDispatch();
   const { columns, tasks } = useSelectedBoard();
 
@@ -38,7 +39,10 @@ export default function EditBoard({ board }: Props) {
  
   useEffect(() => {
     if (success) {
-      dispatch(setSelectedBoardId(null));
+      // Set first board as selected if it exists
+      if (boards.length > 0) dispatch(setSelectedBoardId(boards[0].id))
+      else dispatch(setSelectedBoardId(null));
+      // Hide modal
       dispatch(hideModal());
     }
   }, [success]);
