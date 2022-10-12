@@ -42,7 +42,7 @@ export default function Dashboard() {
               ))}
               {selectedBoardId && (
                 <div 
-                  className="bg-gray-800 w-full lg:w-64 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700"
+                  className="bg-gray-800 w-full lg:w-1/6 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700"
                   onClick={() => dispatch(openModal(<AddColumnModal />))}  
                 >
                   <FaPlus />
