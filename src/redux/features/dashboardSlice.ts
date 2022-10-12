@@ -24,6 +24,9 @@ export const dashboardSlice = createSlice({
       state.selectedBoardId = payload;
     },
     setBoards: (state, { payload }: PayloadAction<Board[]>) => {
+      if (state.selectedBoardId === null) {
+        state.selectedBoardId = payload[0].id;
+      }
       state.boards = payload;
     },
     setColumns: (state, { payload }: PayloadAction<Column[]>) => {
