@@ -32,17 +32,17 @@ export default function Dashboard() {
   return (
     <div className="flex h-full">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 h-full">
         <div className="flex flex-col h-full">
           <Appbar />
-          <div className="flex-1 p-5">
-            <div className="flex gap-10 h-full">
+          <div className="flex-1 p-5" style={{ height: "calc(100vh - 96px)" }}>
+            <div className="flex flex-col lg:flex-row gap-10 h-full">
               {columns.map((column) => (
                 <Column column={column} key={column.id} />
               ))}
               {selectedBoardId && (
                 <div 
-                  className="bg-gray-800 w-64 rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700"
+                  className="bg-gray-800 w-full lg:w-64 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700"
                   onClick={() => dispatch(openModal(<AddColumnModal />))}  
                 >
                   <FaPlus />

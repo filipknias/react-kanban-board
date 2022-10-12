@@ -3,11 +3,28 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-900 text-white;
+  @apply bg-gray-900 text-white overflow-x-hidden;
+}
+
+*::-webkit-scrollbar {
+  @apply w-2 h-full;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-gray-600 rounded-sm;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-gray-800 rounded-sm;
+}
+
+*::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-corner {
+  @apply bg-gray-900
 }
 
 #root {
-  @apply h-screen;
+  @apply lg:h-screen w-screen;
 }
 
 .auth-form-container {
