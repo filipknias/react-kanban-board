@@ -4,15 +4,22 @@ import AddTaskModal from '../modals/AddTaskModal';
 import { useAppDispatch } from "../../redux/hooks";
 import { openModal } from "../../redux/features/modalsSlice";
 import EditBoardModal from '../modals/EditBoardModal';
+import MobileMenu from "./MobileMenu";
+import { useState } from 'react';
 
 export default function Appbar() {
   const { board } = useSelectedBoard();
   const dispatch = useAppDispatch();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="bg-gray-800 border-b-2 border-b-gray-700 py-8 px-5 h-24 flex items-center justify-between w-screen lg:w-auto">
+      <MobileMenu open={menuOpen} hideMenu={() => setMenuOpen(false)} />
       <div className="flex items-center gap-3">
-        <div className="bg-purple-500 rounded-sm flex items-center justify-center p-3 cursor-pointer transition-colors hover:bg-purple-600 lg:hidden">
+        <div 
+          className="bg-purple-500 rounded-sm flex items-center justify-center p-3 cursor-pointer transition-colors hover:bg-purple-600 lg:hidden"
+          onClick={() => setMenuOpen((prevOpen) => !prevOpen)}  
+        >
           <FaBars />
         </div>
         {board && ( <h1 className="font-medium text-xl lg:text-2xl">{board.name}</h1>)}
