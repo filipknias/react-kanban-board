@@ -21,3 +21,6 @@ To install app localy on your computer you need to clone project from github\
 
 Then install all dependencies and run app\
 `npm install && npm start`
+
+# Live Preview
+You can checkout this app here: https://kanban-board-7be56d.netlify.app
