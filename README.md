@@ -16,8 +16,8 @@ In this project I learned more about usage of custom hooks and how useful it can
 
 # Installation
 
-To install app localy on your computer you need to clone project from github
+To install app localy on your computer you need to clone project from github\
 `git clone https://github.com/filipknias/react-kanban-board.git`
 
-Then install all dependencies and run app 
+Then install all dependencies and run app\
 `npm install && npm start`
