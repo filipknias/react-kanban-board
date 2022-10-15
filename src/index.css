@@ -39,6 +39,10 @@ body {
   @apply bg-red-500 text-red-50 rounded-sm w-full border-2 border-red-600 py-2 px-4 text-center;
 }
 
+.auth-form-success-message {
+  @apply bg-green-500 text-green-50 rounded-sm w-full border-2 border-green-600 py-2 px-4 text-center;
+}
+
 .btn-loading {
   @apply cursor-default opacity-50 pointer-events-none;
 }

@@ -9,7 +9,6 @@ interface User {
 
 interface AuthState {
   user: User|null;
-
 }
 
 const initialState: AuthState = {
@@ -26,9 +25,12 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
+    updateEmail: (state, { payload }: PayloadAction<string>) => {
+      if (state.user) state.user.email = payload;
+    },  
   },
 })
 
-export const { signIn, logout } = authSlice.actions;
+export const { signIn, logout, updateEmail } = authSlice.actions;
 
 export default authSlice.reducer;
