@@ -3,9 +3,13 @@
 Kanban Board is management tool designed to help visualize work. Users can create custom boards and manage tasks in individual columns. Every board, column or task can be modified and deleted. It's fully functional app with nice looking responsive UI.
 
 # Screenshots preview
+
 ![dashboard screenshot](screenshots/login_screenshot.png)
+<br/>
 ![dashboard screenshot](screenshots/register_screenshot.png)
+<br/>
 ![dashboard screenshot](screenshots/dashboard_screenshot.png)
+<br/>
 ![dashboard screenshot](screenshots/profile_screenshot.png)
 
 # Tech stack
