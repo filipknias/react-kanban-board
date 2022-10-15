@@ -4,13 +4,13 @@ Kanban Board is management tool designed to help visualize work. Users can creat
 
 # Screenshots preview
 
-![dashboard screenshot](screenshots/login_screenshot.png)
+![login screenshot](screenshots/login_screenshot.png)
 <br/>
-![dashboard screenshot](screenshots/register_screenshot.png)
+![register screenshot](screenshots/register_screenshot.png)
 <br/>
 ![dashboard screenshot](screenshots/dashboard_screenshot.png)
 <br/>
-![dashboard screenshot](screenshots/profile_screenshot.png)
+![profile screenshot](screenshots/profile_screenshot.png)
 
 # Tech stack
 + React
