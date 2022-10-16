@@ -24,13 +24,5 @@ Kanban Board is management tool designed to help visualize work. Users can creat
 
 In this project I learned more about usage of custom hooks and how useful it can be. I learned how to make good files structure in larger project. 
 
-# Installation
-
-To install app localy on your computer you need to clone project from github\
-`git clone https://github.com/filipknias/react-kanban-board.git`
-
-Then install all dependencies and run app\
-`npm install && npm start`
-
 # Live Preview
 You can checkout this app here: https://kanban-board-7be56d.netlify.app
