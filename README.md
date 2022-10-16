@@ -5,16 +5,6 @@ Kanban Board is management tool designed to help visualize work. Users can creat
 # Live Preview
 You can checkout this app here: https://kanban-board-7be56d.netlify.app
 
-# Screenshots preview
-
-![login screenshot](screenshots/login_screenshot.png)
-<br/>
-![register screenshot](screenshots/register_screenshot.png)
-<br/>
-![dashboard screenshot](screenshots/dashboard_screenshot.png)
-<br/>
-![profile screenshot](screenshots/profile_screenshot.png)
-
 # Tech stack
 + React
 + React Router Dom
@@ -24,5 +14,14 @@ You can checkout this app here: https://kanban-board-7be56d.netlify.app
 + Firebase
 
 # What I've learned ?
-
 In this project I learned more about usage of custom hooks and how useful it can be. I learned how to make good files structure in larger project. 
+
+# Screenshots preview
+
+![login screenshot](screenshots/login_screenshot.png)
+<br/>
+![register screenshot](screenshots/register_screenshot.png)
+<br/>
+![dashboard screenshot](screenshots/dashboard_screenshot.png)
+<br/>
+![profile screenshot](screenshots/profile_screenshot.png)
