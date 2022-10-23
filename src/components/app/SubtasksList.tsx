@@ -36,15 +36,14 @@ export default function SubtasksList({ subtasks, taskId }: Props) {
     <ul className="flex flex-col gap-2">
       {subtasks.map((subtask) => (
         <li 
-          className="bg-gray-900 rounded-md p-2 flex items-center gap-2 transition-colors hover:bg-opacity-50 cursor-pointer" 
+          className="bg-gray-900 rounded-md p-2 flex items-center gap-2" 
           key={subtask.idx}
-          onClick={() => updateLocalSubtask(subtask.idx)}
         >
           <input 
             type="checkbox" 
             checked={localSubtasks[subtask.idx].done} 
             id={subtask.idx.toString()}
-            onChange={() => updateLocalSubtask(subtask.idx)} 
+            onChange={() => updateLocalSubtask(subtask.idx)}
           />
           <label htmlFor={subtask.idx.toString()} className={`font-medium ${localSubtasks[subtask.idx].done ? 'line-through' : ''}`}>
             {subtask.name}
