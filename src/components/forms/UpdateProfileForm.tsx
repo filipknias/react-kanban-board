@@ -1,25 +1,24 @@
-import { useEffect } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
-import { openModal } from '../../redux/features/modalsSlice';
-import ReauthenticateModal from '../modals/ReauthenticateModal';
+import { useState } from 'react';
 import UpdateEmailForm from './UpdateEmailForm';
 import UpdatePasswordForm from './UpdatePasswordForm';
 import ProfileFormButtons from './ProfileFormButtons';
+import ReauthenticateForm from './ReauthenticateForm';
 
 export default function UpdateProfileForm() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // Reauthenticate user
-    dispatch(openModal(<ReauthenticateModal />));
-  }, []);
+  const [reauthenticated, setReauthenticated] = useState(false);
 
   return (
     <div className="auth-form-container">
       <div className="flex flex-col gap-12">
-        <UpdateEmailForm />
-        <UpdatePasswordForm />
-        <ProfileFormButtons />
+        {reauthenticated ? (
+          <>
+            <UpdateEmailForm />
+            <UpdatePasswordForm />
+            <ProfileFormButtons />
+          </>
+        ) : (
+          <ReauthenticateForm onSuccess={() => setReauthenticated(true)} />
+        )}
       </div>
     </div>
   )
