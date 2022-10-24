@@ -2,29 +2,22 @@ import React, { useState, useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import { auth, db } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
-import { updatePassword, updateEmail, deleteUser } from 'firebase/auth';
+import { updatePassword, deleteUser } from 'firebase/auth';
 import { deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useAppDispatch } from '../../redux/hooks';
 import { FaTrash, FaHome } from 'react-icons/fa'; 
 import { useNavigate, Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
-import { updateEmail as updateEmailReduxAction } from '../../redux/features/authSlice';
 import { openModal } from '../../redux/features/modalsSlice';
 import ReauthenticateModal from '../modals/ReauthenticateModal';
+import UpdateEmailForm from './UpdateEmailForm';
 
 export default function UpdateProfileForm() {
-  const [email, setEmail] = useState<string>(() => auth.currentUser?.email || "");
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string|null>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const updateEmailAction = useAsync(async () => {
-    if (auth.currentUser === null) return;
-    // Update email
-    await updateEmail(auth.currentUser, email);
-  });
 
   const updatePasswordAction = useAsync(async () => {
     setPasswordError(null);
@@ -49,12 +42,6 @@ export default function UpdateProfileForm() {
     // Delete user profile
     await deleteUser(auth.currentUser);
   });
-  
-  const handleEmailSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (auth.currentUser && email === auth.currentUser.email) return;
-    updateEmailAction.trigger();
-  };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,21 +61,6 @@ export default function UpdateProfileForm() {
   }, [deleteProfileAction.success]);
 
   useEffect(() => {
-    if (auth.currentUser === null || auth.currentUser.email === null) return;
-    // Update user state after success email change
-    dispatch(updateEmailReduxAction(auth.currentUser.email));
-  }, [updateEmailAction.success]);
-
-  useEffect(() => {
-    // Open reauthenticate modal on error code
-    if (updatePasswordAction.error === "auth/requires-recent-login" || 
-        deleteProfileAction.error === "auth/requires-recent-login" || 
-        updateEmailAction.error === "auth/requires-recent-login") {
-          dispatch(openModal(<ReauthenticateModal />));
-        }
-  }, [updatePasswordAction.error, deleteProfileAction.error, updateEmailAction.error]);
-
-  useEffect(() => {
     // Reauthenticate user
     dispatch(openModal(<ReauthenticateModal />));
   }, []);
@@ -96,30 +68,7 @@ export default function UpdateProfileForm() {
   return (
     <div className="auth-form-container">
       <div className="flex flex-col gap-12">
-        <form className="flex flex-col gap-3" onSubmit={handleEmailSubmit}>
-          <label htmlFor="email" className="font-medium">Update E-mail Address</label>
-          {updateEmailAction.error && (
-            <div className="auth-form-error-message">{formatFirebaseError(updateEmailAction.error)}</div>
-          )}
-          {updateEmailAction.success && (
-            <div className="auth-form-success-message">Your e-mail address has changed</div>
-          )}
-          <input
-            id="email"
-            type="text"
-            className="text-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-mail address"
-            required
-          />
-          <button
-            type="submit"
-            className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${updateEmailAction.loading ? "btn-loading" : " "}`}
-          >
-            Update e-mail
-          </button>
-        </form>
+        <UpdateEmailForm />
         <form className="flex flex-col gap-3" onSubmit={handlePasswordSubmit}>
           <label htmlFor="password" className="font-medium">Update Password</label>
           {passwordError && (
