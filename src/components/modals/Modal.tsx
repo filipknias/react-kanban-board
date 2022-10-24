@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import useClickOutiside from '../../hooks/useClickOutiside';
 import { useAppDispatch } from '../../redux/hooks';
 import { hideModal } from '../../redux/features/modalsSlice';
@@ -12,6 +12,14 @@ export default function Modal({ children }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useClickOutiside(modalRef, () => dispatch(hideModal()));
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "auto";
+    }
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-50 flex items-center justify-center p-5 z-10">
