@@ -117,18 +117,20 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
         ></textarea>
         <div className="flex flex-col gap-3">
           <h1 className="font-medium">Subtasks</h1>
-          {subtasks.map(({ idx, name }) => (
-            <div key={idx} className="flex items-center gap-3">
-              <input 
-                type="text"
-                className="text-input"
-                placeholder="Subtask name"
-                value={name}
-                onChange={(e) => updateSubtaskName(idx, e.target.value)}
-              />
-              {subtasks.length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteSubtask(idx)} />}
-            </div>
-          ))}
+          <div className="flex flex-col gap-3 overflow-y-auto max-h-64">
+            {subtasks.map(({ idx, name }) => (
+              <div key={idx} className="flex items-center gap-3">
+                <input 
+                  type="text"
+                  className="text-input"
+                  placeholder="Subtask name"
+                  value={name}
+                  onChange={(e) => updateSubtaskName(idx, e.target.value)}
+                />
+                {subtasks.length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteSubtask(idx)} />}
+              </div>
+            ))}
+          </div>
           <button 
             type="button" 
             className={`modal-form-light-btn ${loading ? "btn-loading" : " "}`}
