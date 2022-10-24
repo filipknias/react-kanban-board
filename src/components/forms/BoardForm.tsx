@@ -157,30 +157,32 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        {formDataColumns.map(({ id, name }) => (
-          <div key={id} className="flex items-center gap-3">
-            <input 
-              type="text"
-              className="text-input"
-              placeholder="Column"
-              value={name}
-              onChange={(e) => updateFormDataColumnName(id, e.target.value)}
-            />
-            {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteFormDataColumn(id)} />}
-          </div>
-        ))}
-        {newColumns.map(({ idx, name }) => (
-          <div key={idx} className="flex items-center gap-3">
-            <input 
-              type="text"
-              className="text-input"
-              placeholder="Column"
-              value={name}
-              onChange={(e) => updateNewColumnName(idx, e.target.value)}
-            />
-            {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteNewColumn(idx)} />}
-          </div>
-        ))}
+        <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
+          {formDataColumns.map(({ id, name }) => (
+            <div key={id} className="flex items-center gap-3">
+              <input 
+                type="text"
+                className="text-input"
+                placeholder="Column"
+                value={name}
+                onChange={(e) => updateFormDataColumnName(id, e.target.value)}
+              />
+              {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteFormDataColumn(id)} />}
+            </div>
+          ))}
+          {newColumns.map(({ idx, name }) => (
+            <div key={idx} className="flex items-center gap-3">
+              <input 
+                type="text"
+                className="text-input"
+                placeholder="Column"
+                value={name}
+                onChange={(e) => updateNewColumnName(idx, e.target.value)}
+              />
+              {[...newColumns, ...formDataColumns].length > 1 && <BsXLg className="text-gray-200 cursor-pointer" onClick={() => deleteNewColumn(idx)} />}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="flex flex-col gap-3">
         <button 
