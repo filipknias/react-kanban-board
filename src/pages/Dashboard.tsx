@@ -11,13 +11,6 @@ import Column from '../components/app/Column';
 import { FaPlus } from 'react-icons/fa';
 import AddColumnModal from '../components/modals/AddColumnModal';
 import { openModal } from "../redux/features/modalsSlice";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import { Carousel } from 'react-responsive-carousel';
-import { Navigation, Pagination, Scrollbar, A11y, FreeMode } from 'swiper';
 
 export default function Dashboard() {
   const user = useAppSelector((state) => state.auth.user);
