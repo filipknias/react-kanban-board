@@ -11,6 +11,13 @@ import Column from '../components/app/Column';
 import { FaPlus } from 'react-icons/fa';
 import AddColumnModal from '../components/modals/AddColumnModal';
 import { openModal } from "../redux/features/modalsSlice";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { Carousel } from 'react-responsive-carousel';
+import { Navigation, Pagination, Scrollbar, A11y, FreeMode } from 'swiper';
 
 export default function Dashboard() {
   const user = useAppSelector((state) => state.auth.user);
@@ -32,26 +39,22 @@ export default function Dashboard() {
   return (
     <div className="flex h-full">
       <Sidebar />
-      <div className="flex-1 h-full">
-        <div className="flex flex-col h-full">
-          <Appbar />
-          <div className="flex-1 p-5" style={{ height: "calc(100vh - 96px)" }}>
-            <div className="flex flex-col lg:flex-row gap-10 h-full">
-              {columns.map((column) => (
-                <Column column={column} key={column.id} />
-              ))}
-              {selectedBoardId && (
-                <div 
-                  className="bg-gray-800 w-full lg:w-1/6 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700"
-                  onClick={() => dispatch(openModal(<AddColumnModal />))}  
-                >
-                  <FaPlus />
-                  <h1 className="font-medium text-xl">Add column</h1>
-                </div>
-              )}
+      <div className="flex-1 h-full flex flex-col" style={{ width: "calc(100vw - 20%)" }}>
+        <Appbar />
+        <div className="flex-1 p-5 flex flex-col lg:flex-row gap-10 h-full overflow-x-auto w-full">
+          {columns.map((column) => (           
+            <Column column={column} key={column.id} />
+          ))}
+          {selectedBoardId && (
+            <div 
+              className="bg-gray-800 w-full lg:w-64 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700 shrink-0"
+              onClick={() => dispatch(openModal(<AddColumnModal />))}  
+            >
+              <FaPlus />
+              <h1 className="font-medium text-xl">Add column</h1>
             </div>
-          </div>  
-        </div>
+          )}
+        </div>  
       </div>
     </div>
   );
