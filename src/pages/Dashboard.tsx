@@ -34,13 +34,13 @@ export default function Dashboard() {
       <Sidebar />
       <div className="flex-1 h-full flex flex-col" style={{ width: "calc(100vw - 20%)" }}>
         <Appbar />
-        <div className="flex-1 p-5 flex flex-col lg:flex-row gap-10 h-full overflow-x-auto w-full">
+        <div className="flex-1 p-5 flex gap-10 h-full overflow-x-auto">
           {columns.map((column) => (           
             <Column column={column} key={column.id} />
           ))}
           {selectedBoardId && (
             <div 
-              className="bg-gray-800 w-full lg:w-64 h-96 lg:h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700 shrink-0"
+              className="bg-gray-800 w-full lg:w-64 h-full rounded-md flex items-center justify-center gap-2 text-gray-400 cursor-pointer transition-colors hover:bg-gray-700 shrink-0"
               onClick={() => dispatch(openModal(<AddColumnModal />))}  
             >
               <FaPlus />
