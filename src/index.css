@@ -24,7 +24,7 @@ body {
 }
 
 #root {
-  @apply lg:h-screen w-screen;
+  @apply h-screen w-screen;
 }
 
 .auth-form-container {
