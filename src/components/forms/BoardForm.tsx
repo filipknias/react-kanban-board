@@ -7,6 +7,7 @@ import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
+import { User } from '../../redux/features/authSlice';
 
 interface FormData {
   board: Board;
@@ -35,66 +36,77 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
   // Columns from formData props
   const [formDataColumns, setFormDataColumns] = useState<Column[]>(formData?.columns || []);
 
+  const createBoard = async (user: User, columns: NewColumn[]) => {
+    // Save board
+    const boardRef = await addDoc(collection(db, "boards"), {
+      name, 
+      userId: user.uid, 
+      createdAt: timestamp 
+    });
+    // Save columns
+    columns.forEach(async ({ name }) => {
+      await addDoc(collection(db, "columns"), {
+        name, 
+        boardId: boardRef.id,
+        userId: user.uid,
+        createdAt: timestamp,
+      });
+    });
+    // Return saved board reference
+    return boardRef;
+  };
+
+  const updateBoardData = async (user: User, newColumns: NewColumn[]) => {
+    if (formData === undefined) return;
+    // Update board data
+    const boardRef = doc(db, "boards", formData.board.id);
+    await updateDoc(boardRef, { name });
+    // Update columns data
+    formData.columns.forEach(async (column) => {
+      const columnRef = doc(db, "columns", column.id);
+      // Check if column was deleted
+      const formDataColumn = formDataColumns.find((c) => c.id === column.id);
+      if (!formDataColumn) {
+        // Delete column and tasks
+        await deleteDoc(columnRef); 
+        formData.tasks.forEach(async (task) => {
+          const taskRef = doc(db, "tasks", task.id);
+          await deleteDoc(taskRef);
+        });
+      }
+    });
+    // Update name changes
+    formDataColumns.forEach(async (column) => {
+      const columnRef = doc(db, "columns", column.id);
+      await updateDoc(columnRef, { name: column.name });
+    });
+    // Save new columns in firestore
+    newColumns.forEach(async (column) => {
+      const boardId = formData.board.id;
+      await addDoc(collection(db, "columns"), {
+        name: column.name,
+        boardId,
+        userId: user.uid,
+        createdAt: timestamp,
+      });
+    });
+  };
+
   const { trigger, error, loading, success } = useAsync(async () => {
     if (user === null) return;
     const validColumns = newColumns.filter(({ name }) => name.trim() !== "");
 
     switch (action) {
       case "create": {
-        // Save board
-        const boardRef = await addDoc(collection(db, "boards"), {
-          name, 
-          userId: user.uid, 
-          createdAt: timestamp 
-        });
-        // Save columns
-        validColumns.forEach(async ({ name }) => {
-          await addDoc(collection(db, "columns"), {
-            name, 
-            boardId: boardRef.id,
-            userId: user.uid,
-            createdAt: timestamp,
-          });
-        });
-
+        // Create new board
+        const boardRef = await createBoard(user, validColumns);
         // Set new board as selected
         dispatch(setSelectedBoardId(boardRef.id));
         break;
       };
       case "update": {
-        if (formData === undefined) return;
-        // Update board data
-        const boardRef = doc(db, "boards", formData.board.id);
-        await updateDoc(boardRef, { name });
-        // Update columns data
-        formData.columns.forEach(async (column) => {
-          const columnRef = doc(db, "columns", column.id);
-          // Check if column was deleted
-          const formDataColumn = formDataColumns.find((c) => c.id === column.id);
-          if (!formDataColumn) {
-            // Delete column and tasks
-            await deleteDoc(columnRef); 
-            formData.tasks.forEach(async (task) => {
-              const taskRef = doc(db, "tasks", task.id);
-              await deleteDoc(taskRef);
-            });
-          }
-        });
-        // Update name changes
-        formDataColumns.forEach(async (column) => {
-          const columnRef = doc(db, "columns", column.id);
-          await updateDoc(columnRef, { name: column.name });
-        });
-        // Save new columns in firestore
-        validColumns.forEach(async (column) => {
-          const boardId = formData.board.id;
-          await addDoc(collection(db, "columns"), {
-            name: column.name,
-            boardId,
-            userId: user.uid,
-            createdAt: timestamp,
-          });
-        });
+        // Edit board data
+        updateBoardData(user, validColumns);
         break;
       };
     }
