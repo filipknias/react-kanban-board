@@ -76,7 +76,7 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
     setSubtasks((prevSubtasks) => {
       return prevSubtasks.map((task) => {
         if (task.idx === idx) return { ...task, name };
-        else return task;
+        return task;
       })
     })
   };
