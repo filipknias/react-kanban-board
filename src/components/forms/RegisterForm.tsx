@@ -7,6 +7,7 @@ import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from '../../utilities/routes';
 import useAsync from '../../hooks/useAsync';
+import TextInput from 'src/components/utilities/TextInput';
 
 const provider = new GoogleAuthProvider();
 
@@ -57,25 +58,22 @@ export default function RegisterForm() {
           {errorMessage && (
             <div className="auth-form-error-message">{errorMessage}</div>
           )}
-          <input
+          <TextInput
             type="email"
-            className="text-input"
             placeholder="E-mail address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
+          <TextInput
             type="password"
-            className="text-input"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <input
+          <TextInput
             type="password"
-            className="text-input"
             placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}

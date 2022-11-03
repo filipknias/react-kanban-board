@@ -5,6 +5,7 @@ import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { updateEmail } from 'firebase/auth';
 import { updateEmail as updateEmailReduxAction } from '../../redux/features/authSlice';
 import { useAppDispatch } from '../../redux/hooks';
+import TextInput from 'src/components/utilities/TextInput';
 
 export default function UpdateEmailForm() {
   const [email, setEmail] = useState<string>(auth.currentUser?.email || "");
@@ -46,10 +47,9 @@ export default function UpdateEmailForm() {
       {success && (
         <div className="auth-form-success-message">Your e-mail address has changed</div>
       )}
-      <input
+      <TextInput
         id="email"
-        type="text"
-        className="text-input"
+        type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="E-mail address"

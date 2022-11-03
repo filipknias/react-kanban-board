@@ -6,6 +6,7 @@ import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { hideModal } from '../../redux/features/modalsSlice';
+import TextInput from 'src/components/utilities/TextInput';
 
 export default function AddColumnModal() {
   const [columnName, setColumnName] = useState('');
@@ -42,9 +43,8 @@ export default function AddColumnModal() {
           {error && (
             <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
           )}
-          <input 
+          <TextInput
             type="text"
-            className="text-input"
             placeholder="Column name"
             required
             value={columnName}

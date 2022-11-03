@@ -3,6 +3,7 @@ import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import useAsync from '../../hooks/useAsync';
+import TextInput from 'src/components/utilities/TextInput';
 
 interface Props {
   onSuccess: () => void;
@@ -33,9 +34,8 @@ export default function ReauthenticateForm({ onSuccess }: Props) {
         {error && (
           <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
         )}
-        <input 
+        <TextInput
           type="password"
-          className="text-input"
           placeholder="Password"
           required
           value={password}

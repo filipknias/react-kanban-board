@@ -8,6 +8,7 @@ import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
 import { User } from '../../redux/features/authSlice';
+import TextInput from 'src/components/utilities/TextInput';
 
 interface FormData {
   board: Board;
@@ -161,20 +162,18 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         {error && (
           <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
         )}
-        <input 
+        <TextInput
           type="text"
-          className="text-input"
           placeholder="Name"
           required
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)} 
         />
         <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
           {formDataColumns.map(({ id, name }) => (
             <div key={id} className="flex items-center gap-3">
-              <input 
+              <TextInput
                 type="text"
-                className="text-input"
                 placeholder="Column"
                 value={name}
                 onChange={(e) => updateFormDataColumnName(id, e.target.value)}
@@ -184,9 +183,8 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
           ))}
           {newColumns.map(({ idx, name }) => (
             <div key={idx} className="flex items-center gap-3">
-              <input 
+              <TextInput
                 type="text"
-                className="text-input"
                 placeholder="Column"
                 value={name}
                 onChange={(e) => updateNewColumnName(idx, e.target.value)}

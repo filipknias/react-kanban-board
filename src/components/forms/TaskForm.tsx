@@ -7,6 +7,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { db, timestamp } from '../../lib/firebase';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
+import TextInput from 'src/components/utilities/TextInput';
 
 interface Props {
   formData?: Task;
@@ -100,16 +101,15 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
         {error && (
           <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
         )}
-        <input 
+        <TextInput
           type="text"
-          className="text-input"
           placeholder="Title"
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
-          className="text-input"
+          className="bg-gray-700 border-none outline-none p-2 rounded-sm w-full"
           placeholder="Optional description"
           rows={3}
           value={description}
@@ -120,9 +120,8 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
           <div className="flex flex-col gap-3 overflow-y-auto max-h-64">
             {subtasks.map(({ idx, name }) => (
               <div key={idx} className="flex items-center gap-3">
-                <input 
+                <TextInput
                   type="text"
-                  className="text-input"
                   placeholder="Subtask name"
                   value={name}
                   onChange={(e) => updateSubtaskName(idx, e.target.value)}

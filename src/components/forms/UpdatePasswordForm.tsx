@@ -3,6 +3,7 @@ import useAsync from '../../hooks/useAsync';
 import { auth } from '../../lib/firebase';
 import { updatePassword } from 'firebase/auth';
 import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import TextInput from 'src/components/utilities/TextInput';
 
 export default function UpdatePasswordForm() {
   const [newPassword, setNewPassword] = useState<string>('');
@@ -39,18 +40,16 @@ export default function UpdatePasswordForm() {
       {success && (
         <div className="auth-form-success-message">Your password has changed</div>
       )}
-      <input
+      <TextInput
         id="password"
         type="password"
-        className="text-input"
         placeholder="New password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
         required
       />
-      <input
+      <TextInput 
         type="password"
-        className="text-input"
         placeholder="Confirm password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
