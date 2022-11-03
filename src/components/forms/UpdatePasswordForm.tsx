@@ -4,6 +4,7 @@ import { auth } from 'src/lib/firebase';
 import { updatePassword } from 'firebase/auth';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import TextInput from 'src/components/utilities/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
 
 export default function UpdatePasswordForm() {
   const [newPassword, setNewPassword] = useState<string>('');
@@ -35,10 +36,10 @@ export default function UpdatePasswordForm() {
     <form className="flex flex-col gap-3" onSubmit={handlePasswordSubmit}>
       <label htmlFor="password" className="font-medium">Update Password</label>
       {passwordError && (
-        <div className="auth-form-error-message">{passwordError}</div>
+        <FormMessage variant="error">{passwordError}</FormMessage>
       )}
       {success && (
-        <div className="auth-form-success-message">Your password has changed</div>
+        <FormMessage variant="success">Your password has changed</FormMessage>
       )}
       <TextInput
         id="password"

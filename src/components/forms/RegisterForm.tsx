@@ -9,6 +9,7 @@ import routes from 'src/utilities/routes';
 import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/utilities/TextInput';
 import FormContainer from 'src/components/forms/FormContainer';
+import FormMessage from 'src/components/forms/FormMessage';
 
 const provider = new GoogleAuthProvider();
 
@@ -58,7 +59,7 @@ export default function RegisterForm() {
           </div>
           <div className="flex flex-col gap-5">
             {errorMessage && (
-              <div className="auth-form-error-message">{errorMessage}</div>
+              <FormMessage variant="error">{errorMessage}</FormMessage>
             )}
             <TextInput
               type="email"

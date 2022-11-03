@@ -4,6 +4,7 @@ import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from 'src/lib/firebase';
 import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/utilities/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
 
 interface Props {
   onSuccess: () => void;
@@ -32,7 +33,9 @@ export default function ReauthenticateForm({ onSuccess }: Props) {
       <h1 className="text-lg font-medium">Reauthenticate with password</h1>
       <div className="flex flex-col gap-3">
         {error && (
-          <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+          <FormMessage variant="error">
+            {formatFirebaseError(error)}
+          </FormMessage>
         )}
         <TextInput
           type="password"

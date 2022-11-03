@@ -8,6 +8,7 @@ import { db, timestamp } from 'src/lib/firebase';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
 import TextInput from 'src/components/utilities/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
 
 interface Props {
   formData?: Task;
@@ -99,7 +100,9 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-3">
         {error && (
-          <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+          <FormMessage variant="error">
+            {formatFirebaseError(error)}
+          </FormMessage>
         )}
         <TextInput
           type="text"

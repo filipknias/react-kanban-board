@@ -7,6 +7,7 @@ import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { hideModal } from 'src/redux/features/modalsSlice';
 import TextInput from 'src/components/utilities/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
 
 export default function AddColumnModal() {
   const [columnName, setColumnName] = useState('');
@@ -41,7 +42,7 @@ export default function AddColumnModal() {
         <h1 className="text-lg font-medium">Add Column</h1>
         <div className="flex flex-col gap-3">
           {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+            <FormMessage variant="error">{formatFirebaseError(error)}</FormMessage>
           )}
           <TextInput
             type="text"

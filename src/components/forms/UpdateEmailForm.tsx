@@ -6,6 +6,7 @@ import { updateEmail } from 'firebase/auth';
 import { updateEmail as updateEmailReduxAction } from 'src/redux/features/authSlice';
 import { useAppDispatch } from 'src/redux/hooks';
 import TextInput from 'src/components/utilities/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
 
 export default function UpdateEmailForm() {
   const [email, setEmail] = useState<string>(auth.currentUser?.email || "");
@@ -42,10 +43,10 @@ export default function UpdateEmailForm() {
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <label htmlFor="email" className="font-medium">Update E-mail Address</label>
       {errorMessage && (
-        <div className="auth-form-error-message">{errorMessage}</div>
+        <FormMessage variant="error">{errorMessage}</FormMessage>
       )}
       {success && (
-        <div className="auth-form-success-message">Your e-mail address has changed</div>
+        <FormMessage variant="success">Your e-mail address has changed</FormMessage>
       )}
       <TextInput
         id="email"

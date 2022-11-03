@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'src/lib/firebase';
+import FormMessage from 'src/components/forms/FormMessage';
 
 interface Props {
   board: Board;
@@ -53,7 +54,7 @@ export default function EditBoard({ board }: Props) {
         <div className="flex flex-col gap-3">
           <h1 className="text-lg font-medium">Edit board</h1>
           {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+            <FormMessage variant="error">{formatFirebaseError(error)}</FormMessage>
           )}
           <BoardForm 
             action="update"
