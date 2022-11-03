@@ -1,8 +1,8 @@
 import { useState, useEffect, FormEvent } from 'react';
-import useAsync from '../../hooks/useAsync';
-import { auth } from '../../lib/firebase';
+import useAsync from 'src/hooks/useAsync';
+import { auth } from 'src/lib/firebase';
 import { updatePassword } from 'firebase/auth';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import TextInput from 'src/components/utilities/TextInput';
 
 export default function UpdatePasswordForm() {

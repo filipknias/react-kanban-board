@@ -1,15 +1,15 @@
-import Modal from "./Modal";
-import { Task } from "../../utilities/types";
-import useSelectedBoard from '../../hooks/useSelectedBoard';
+import Modal from "src/components/modals/Modal";
+import { Task } from "src/utilities/types";
+import useSelectedBoard from 'src/hooks/useSelectedBoard';
 import { useState, useEffect } from 'react';
-import SubtasksList from '../app/SubtasksList';
+import SubtasksList from 'src/components/app/SubtasksList';
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
-import { db } from '../../lib/firebase';
+import { db } from 'src/lib/firebase';
 import { FaTrash, FaEdit } from 'react-icons/fa';
-import useAsync from '../../hooks/useAsync';
-import { hideModal, openModal } from '../../redux/features/modalsSlice';
-import { useAppDispatch } from '../../redux/hooks';
-import EditTaskModal from './EditTaskModal';
+import useAsync from 'src/hooks/useAsync';
+import { hideModal, openModal } from 'src/redux/features/modalsSlice';
+import { useAppDispatch } from 'src/redux/hooks';
+import EditTaskModal from 'src/components/modals/EditTaskModal';
 
 interface Props {
   task: Task;

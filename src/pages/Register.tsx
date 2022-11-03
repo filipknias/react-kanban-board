@@ -1,5 +1,5 @@
-import Logo from '../components/utilities/Logo';
-import RegisterForm from '../components/forms/RegisterForm';
+import Logo from 'src/components/utilities/Logo';
+import RegisterForm from 'src/components/forms/RegisterForm';
 
 export default function Register() {
   return (

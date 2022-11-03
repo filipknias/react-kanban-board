@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
-import useAsync from '../../hooks/useAsync';
+import { auth } from 'src/lib/firebase';
+import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/utilities/TextInput';
 
 interface Props {

@@ -1,8 +1,8 @@
-import { Task } from "../../utilities/types";
-import Modal from './Modal';
-import TaskForm from '../forms/TaskForm';
-import { useAppDispatch } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
+import { Task } from "src/utilities/types";
+import Modal from 'src/components/modals/Modal';
+import TaskForm from 'src/components/forms/TaskForm';
+import { useAppDispatch } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
 
 interface Props {
   task: Task;

@@ -1,8 +1,8 @@
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { auth } from 'src/lib/firebase';
 import { Link } from 'react-router-dom';
-import routes from '../../utilities/routes';
+import routes from 'src/utilities/routes';
 
 export default function NavigationAuthLinks() {
   return (

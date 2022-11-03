@@ -1,7 +1,7 @@
-import { Column as ColumnType } from '../../utilities/types';
+import { Column as ColumnType } from 'src/utilities/types';
 import { useMemo } from 'react';
-import useSelectedBoard from '../../hooks/useSelectedBoard';
-import Task from './Task';
+import useSelectedBoard from 'src/hooks/useSelectedBoard';
+import Task from 'src/components/app/Task';
 
 interface Props {
   column: ColumnType;

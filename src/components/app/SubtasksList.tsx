@@ -1,7 +1,7 @@
-import { Subtask } from "../../utilities/types";
+import { Subtask } from "src/utilities/types";
 import { useState, useEffect } from 'react';
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from '../../lib/firebase';
+import { db } from 'src/lib/firebase';
 
 interface Props {
   subtasks: Subtask[];

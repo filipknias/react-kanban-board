@@ -1,10 +1,10 @@
-import useSelectedBoard from "../../hooks/useSelectedBoard";
+import useSelectedBoard from "src/hooks/useSelectedBoard";
 import { FaPlus, FaCog, FaBars } from 'react-icons/fa';
-import AddTaskModal from '../modals/AddTaskModal';
-import { useAppDispatch } from "../../redux/hooks";
-import { openModal } from "../../redux/features/modalsSlice";
-import EditBoardModal from '../modals/EditBoardModal';
-import MobileMenu from "./MobileMenu";
+import AddTaskModal from 'src/components/modals/AddTaskModal';
+import { useAppDispatch } from "src/redux/hooks";
+import { openModal } from "src/redux/features/modalsSlice";
+import EditBoardModal from 'src/components/modals/EditBoardModal';
+import MobileMenu from "src/components/app/MobileMenu";
 import { useState } from 'react';
 
 export default function Appbar() {

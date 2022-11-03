@@ -1,10 +1,10 @@
 import { useState, useEffect, FormEvent } from 'react';
-import useAsync from '../../hooks/useAsync';
-import { auth } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import useAsync from 'src/hooks/useAsync';
+import { auth } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { updateEmail } from 'firebase/auth';
-import { updateEmail as updateEmailReduxAction } from '../../redux/features/authSlice';
-import { useAppDispatch } from '../../redux/hooks';
+import { updateEmail as updateEmailReduxAction } from 'src/redux/features/authSlice';
+import { useAppDispatch } from 'src/redux/hooks';
 import TextInput from 'src/components/utilities/TextInput';
 
 export default function UpdateEmailForm() {

@@ -1,8 +1,8 @@
-import { Task as TaskType } from "../../utilities/types";
+import { Task as TaskType } from "src/utilities/types";
 import { useMemo } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
-import { openModal } from '../../redux/features/modalsSlice';
-import TaskModal from '../modals/TaskModal';
+import { useAppDispatch } from 'src/redux/hooks';
+import { openModal } from 'src/redux/features/modalsSlice';
+import TaskModal from 'src/components/modals/TaskModal';
 
 interface Props {
   task: TaskType;

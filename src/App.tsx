@@ -14,8 +14,8 @@ import Profile from './pages/Profile';
 import { signIn, logout } from './redux/features/authSlice';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './lib/firebase';
-import ModalManager from './components/modals/ModalManager';
+import { auth } from 'src/lib/firebase';
+import ModalManager from 'src/components/modals/ModalManager';
 
 export default function App() {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import routes from "../../utilities/routes";
+import routes from "src/utilities/routes";
 
 interface Props {
   isAuth: boolean;

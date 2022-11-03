@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
-import GoogleButton from '../utilities/GoogleButton';
+import GoogleButton from 'src/components/utilities/GoogleButton';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { auth } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
-import routes from '../../utilities/routes';
-import useAsync from '../../hooks/useAsync';
+import routes from 'src/utilities/routes';
+import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/utilities/TextInput';
 
 const provider = new GoogleAuthProvider();

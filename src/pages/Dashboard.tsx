@@ -1,16 +1,16 @@
-import Sidebar from "../components/app/Sidebar";
-import Appbar from "../components/app/Appbar";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setBoards, setColumns, setTasks } from "../redux/features/dashboardSlice";
-import useFirestoreListener from '../hooks/useFirestoreListener';
+import Sidebar from "src/components/app/Sidebar";
+import Appbar from "src/components/app/Appbar";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { setBoards, setColumns, setTasks } from "src/redux/features/dashboardSlice";
+import useFirestoreListener from 'src/hooks/useFirestoreListener';
 import { collection, query, where } from "firebase/firestore";
-import { db } from "../lib/firebase";
-import { Board, Column as ColumnType, Task } from "../utilities/types";
-import useSelectedBoard from "../hooks/useSelectedBoard";
-import Column from '../components/app/Column';
+import { db } from "src/lib/firebase";
+import { Board, Column as ColumnType, Task } from "src/utilities/types";
+import useSelectedBoard from "src/hooks/useSelectedBoard";
+import Column from 'src/components/app/Column';
 import { FaPlus } from 'react-icons/fa';
-import AddColumnModal from '../components/modals/AddColumnModal';
-import { openModal } from "../redux/features/modalsSlice";
+import AddColumnModal from 'src/components/modals/AddColumnModal';
+import { openModal } from "src/redux/features/modalsSlice";
 
 export default function Dashboard() {
   const user = useAppSelector((state) => state.auth.user);

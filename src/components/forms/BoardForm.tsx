@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Board, SubmitAction, Column, Task } from "../../utilities/types";
+import { Board, SubmitAction, Column, Task } from "src/utilities/types";
 import { BsXLg } from 'react-icons/bs';
-import useAsync from '../../hooks/useAsync';
+import useAsync from 'src/hooks/useAsync';
 import { addDoc, collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { db, timestamp } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
-import { User } from '../../redux/features/authSlice';
+import { db, timestamp } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
+import { User } from 'src/redux/features/authSlice';
 import TextInput from 'src/components/utilities/TextInput';
 
 interface FormData {

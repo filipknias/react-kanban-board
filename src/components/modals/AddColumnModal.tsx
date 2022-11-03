@@ -1,11 +1,11 @@
-import Modal from "./Modal"
+import Modal from "src/components/modals/Modal"
 import { useEffect, useState } from 'react';
-import useAsync from '../../hooks/useAsync';
+import useAsync from 'src/hooks/useAsync';
 import { addDoc, collection } from 'firebase/firestore';
-import { db, timestamp } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
+import { db, timestamp } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
 import TextInput from 'src/components/utilities/TextInput';
 
 export default function AddColumnModal() {

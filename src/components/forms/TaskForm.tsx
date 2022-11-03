@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Subtask, Task, SubmitAction } from "../../utilities/types";
-import useSelectedBoard from '../../hooks/useSelectedBoard';
+import { Subtask, Task, SubmitAction } from "src/utilities/types";
+import useSelectedBoard from 'src/hooks/useSelectedBoard';
 import { BsXLg } from 'react-icons/bs';
-import useAsync from '../../hooks/useAsync';
-import { useAppSelector } from '../../redux/hooks';
-import { db, timestamp } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import useAsync from 'src/hooks/useAsync';
+import { useAppSelector } from 'src/redux/hooks';
+import { db, timestamp } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
 import TextInput from 'src/components/utilities/TextInput';
 

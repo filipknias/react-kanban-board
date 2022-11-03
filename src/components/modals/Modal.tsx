@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
-import useClickOutiside from '../../hooks/useClickOutiside';
-import { useAppDispatch } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
+import useClickOutiside from 'src/hooks/useClickOutiside';
+import { useAppDispatch } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
 
 interface Props {
   children: React.ReactNode;

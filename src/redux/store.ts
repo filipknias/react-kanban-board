@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './features/authSlice';
-import modalsReducer from './features/modalsSlice';
-import dashboardReducer from './features/dashboardSlice';
+import authReducer from 'src/redux/features/authSlice';
+import modalsReducer from 'src/redux/features/modalsSlice';
+import dashboardReducer from 'src/redux/features/dashboardSlice';
 
 export const store = configureStore({
   reducer: {

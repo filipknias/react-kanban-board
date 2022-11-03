@@ -1,16 +1,16 @@
-import Modal from "./Modal";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import BoardForm from "../forms/BoardForm";
-import useSelectedBoard from '../../hooks/useSelectedBoard';
-import { Board } from '../../utilities/types';
-import { hideModal } from '../../redux/features/modalsSlice';
+import Modal from "src/components/modals/Modal";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import BoardForm from "src/components/forms/BoardForm";
+import useSelectedBoard from 'src/hooks/useSelectedBoard';
+import { Board } from 'src/utilities/types';
+import { hideModal } from 'src/redux/features/modalsSlice';
 import { FaTrash } from 'react-icons/fa';
-import useAsync from '../../hooks/useAsync';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import useAsync from 'src/hooks/useAsync';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { useEffect } from 'react';
-import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
+import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
+import { db } from 'src/lib/firebase';
 
 interface Props {
   board: Board;

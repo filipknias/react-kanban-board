@@ -1,9 +1,9 @@
 import { FaThList, FaPlus } from 'react-icons/fa';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import CreateBoardModal from '../modals/CreateBoardModal';
-import { openModal } from '../../redux/features/modalsSlice';
-import { Board } from '../../utilities/types';
-import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import CreateBoardModal from 'src/components/modals/CreateBoardModal';
+import { openModal } from 'src/redux/features/modalsSlice';
+import { Board } from 'src/utilities/types';
+import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 
 interface Props {
   boards: Board[];
