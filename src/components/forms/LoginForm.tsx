@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import routes from 'src/utilities/routes';
 import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/utilities/TextInput';
+import FormContainer from 'src/components/forms/FormContainer';
 
 const provider = new GoogleAuthProvider();
 
@@ -28,44 +29,46 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="auth-form-container" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-10">
-        <div className="flex items-center justify-center gap-3">
-          <FaUserAlt />
-          <h1 className="font-bold text-xl">Sign in to your account</h1>
+    <FormContainer>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-10">
+          <div className="flex items-center justify-center gap-3">
+            <FaUserAlt />
+            <h1 className="font-bold text-xl">Sign in to your account</h1>
+          </div>
+          <div className="flex flex-col gap-5">
+            {error && (
+              <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+            )}
+            <TextInput
+              type="email"
+              placeholder="E-mail address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <TextInput
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Link to={routes.register} className="auth-link">
+              Create new account
+            </Link>
+          </div>
+          <div className="flex flex-col gap-5">
+            <button 
+              type="submit"
+              className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
+            >
+              Submit
+            </button>
+            <GoogleButton onClick={handleGoogleLogin} />
+          </div>
         </div>
-        <div className="flex flex-col gap-5">
-          {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
-          )}
-          <TextInput
-            type="email"
-            placeholder="E-mail address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <TextInput
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Link to={routes.register} className="auth-link">
-            Create new account
-          </Link>
-        </div>
-        <div className="flex flex-col gap-5">
-          <button 
-            type="submit"
-            className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-          >
-            Submit
-          </button>
-          <GoogleButton onClick={handleGoogleLogin} />
-        </div>
-      </div>
-    </form>
+      </form>
+    </FormContainer>
   )
 };
