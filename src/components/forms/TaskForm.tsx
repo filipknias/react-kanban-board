@@ -10,6 +10,7 @@ import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 import Button from "src/components/common/Button";
+import SelectInput from "src/components/common/SelectInput";
 
 interface Props {
   formData?: Task;
@@ -145,16 +146,15 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="column-id" className="font-medium">Column</label>
-          <select
+          <SelectInput
             id="column-id"
-            className="select-input"
             defaultValue={formData?.columnId}
             onChange={(e) => setColumnId(e.target.value)}
           >
             {columns.map((column) => (
               <option value={column.id} key={column.id}>{column.name}</option>
             ))}
-          </select>
+          </SelectInput>
         </div>
       </div>
       <Button type="submit" disabled={loading}>

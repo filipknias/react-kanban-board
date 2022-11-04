@@ -11,6 +11,7 @@ import { hideModal, openModal } from 'src/redux/features/modalsSlice';
 import { useAppDispatch } from 'src/redux/hooks';
 import EditTaskModal from 'src/components/modals/EditTaskModal';
 import Button from "src/components/common/Button";
+import SelectInput from "src/components/common/SelectInput";
 
 interface Props {
   task: Task;
@@ -65,16 +66,15 @@ export default function TaskModal({ task }: Props) {
         {task.subtasks.length > 0 && <SubtasksList subtasks={task.subtasks} taskId={task.id} />}
         <div className="flex flex-col gap-2">
           <label htmlFor="column-id" className="font-medium">Current Status</label>
-          <select 
-            id="column-id" 
-            className="select-input"
+          <SelectInput 
+            id="column-id"
             onChange={(e) => setColumnId(e.target.value)}
             value={columnId}
           >
             {columns.map((column) => (
               <option value={column.id} key={column.id}>{column.name}</option>
             ))}
-          </select>
+          </SelectInput>
         </div>
       </div>
     </Modal>
