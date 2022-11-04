@@ -27,10 +27,6 @@ body {
   @apply h-screen w-screen;
 } 
 
-.auth-link {
-  @apply font-medium text-purple-500 block w-min whitespace-nowrap;
-}
-
 .select-input {
   @apply bg-gray-700 outline-none cursor-pointer p-2;
 }

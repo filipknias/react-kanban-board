@@ -58,7 +58,7 @@ export default function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Link to={routes.register} className="auth-link">
+            <Link to={routes.register} className="font-medium text-purple-500 block w-min whitespace-nowrap">
               Create new account
             </Link>
           </div>
