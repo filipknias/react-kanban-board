@@ -9,22 +9,22 @@ interface Props {
 }
 
 export default function SubtasksList({ subtasks, taskId }: Props) {
-  const [localSubtasks, setLocalSubtasks] = useState<Subtask[]>(subtasks);
+  const [subtasksList, setSubtasksList] = useState<Subtask[]>(subtasks);
 
   useEffect(() => {
     updateSubtasksDocs();
-  }, [localSubtasks]);
+  }, [subtasksList]);
 
   const updateSubtasksDocs = async () => {
     const taskRef = doc(db, "tasks", taskId);
 
     await updateDoc(taskRef, {
-      subtasks: localSubtasks,
+      subtasks: subtasksList,
     });
   };
 
-  const updateLocalSubtask = (idx: number) => {
-    setLocalSubtasks((prevSubtasks) => {
+  const updateSubtasksList = (idx: number) => {
+    setSubtasksList((prevSubtasks) => {
       return prevSubtasks.map((task) => {
         if (task.idx === idx) return { ...task, done: !task.done };
         return task;
@@ -36,17 +36,16 @@ export default function SubtasksList({ subtasks, taskId }: Props) {
     <ul className="flex flex-col gap-2">
       {subtasks.map((subtask) => (
         <li 
-          className="bg-gray-900 rounded-md p-2 flex items-center gap-2 transition-colors hover:bg-opacity-50 cursor-pointer" 
+          className="bg-gray-900 rounded-md p-2 flex items-center gap-2 transition-colors" 
           key={subtask.idx}
-          onClick={() => updateLocalSubtask(subtask.idx)}
         >
           <input 
             type="checkbox" 
-            checked={localSubtasks[subtask.idx].done} 
+            checked={subtasksList[subtask.idx].done} 
             id={subtask.idx.toString()}
-            onChange={() => updateLocalSubtask(subtask.idx)} 
+            onChange={() => updateSubtasksList(subtask.idx)} 
           />
-          <label htmlFor={subtask.idx.toString()} className={`font-medium ${localSubtasks[subtask.idx].done ? 'line-through' : ''}`}>
+          <label htmlFor={subtask.idx.toString()} className={`font-medium ${subtasksList[subtask.idx].done ? 'line-through' : ''}`}>
             {subtask.name}
           </label>
         </li>
