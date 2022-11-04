@@ -10,6 +10,7 @@ import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/common/TextInput';
 import FormContainer from 'src/components/forms/FormContainer';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 const provider = new GoogleAuthProvider();
 
@@ -96,12 +97,9 @@ export default function RegisterForm() {
             </Link>
           </div>
           <div className="flex flex-col gap-5">
-            <button 
-              type="submit"
-              className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-            >
+            <Button type="submit" disabled={loading}>
               Submit
-            </button>
+            </Button>
             <GoogleButton onClick={handleGoogleLogin} />
           </div>
         </div>

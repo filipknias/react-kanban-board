@@ -10,6 +10,7 @@ import useAsync from 'src/hooks/useAsync';
 import { hideModal, openModal } from 'src/redux/features/modalsSlice';
 import { useAppDispatch } from 'src/redux/hooks';
 import EditTaskModal from 'src/components/modals/EditTaskModal';
+import Button from "src/components/common/Button";
 
 interface Props {
   task: Task;
@@ -44,18 +45,20 @@ export default function TaskModal({ task }: Props) {
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-medium">{task.name}</h1>
           <div className="flex gap-3">
-            <button 
-              className={`bg-blue-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-blue-600 ${loading ? "btn-loading" : " "}`}
+            <Button 
+              variant="info"
+              disabled={loading}
               onClick={() => dispatch(openModal(<EditTaskModal task={task} />))}  
             >
               <FaEdit />
-            </button>
-            <button 
-              className={`bg-red-500 p-2 flex items-center justify-center text-white text-sm rounded-sm transition-colors hover:bg-red-600 ${loading ? "btn-loading" : " "}`}
+            </Button>
+            <Button 
+              variant="danger"
+              disabled={loading}
               onClick={trigger}  
             >
               <FaTrash />
-            </button>
+            </Button>
           </div>
         </div>
         <p className="text-sm text-gray-400">{task.description ? task.description : "No description"}</p>

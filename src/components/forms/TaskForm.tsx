@@ -9,6 +9,7 @@ import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 interface Props {
   formData?: Task;
@@ -133,13 +134,14 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
               </div>
             ))}
           </div>
-          <button 
+          <Button
+            variant="secondary"
             type="button" 
-            className={`modal-form-light-btn ${loading ? "btn-loading" : " "}`}
+            disabled={loading}
             onClick={addSubtask}
           >
             Add Subtask
-          </button>
+          </Button>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="column-id" className="font-medium">Column</label>
@@ -155,9 +157,9 @@ export default function TaskForm({ formData, action, onSuccess }: Props) {
           </select>
         </div>
       </div>
-      <button type="submit" className={`modal-form-btn ${loading ? "btn-loading" : ""}`}>
+      <Button type="submit" disabled={loading}>
         Save
-      </button>
+      </Button>
     </form>
   )
 }

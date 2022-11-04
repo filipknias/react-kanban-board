@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { hideModal } from 'src/redux/features/modalsSlice';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function AddColumnModal() {
   const [columnName, setColumnName] = useState('');
@@ -52,9 +53,9 @@ export default function AddColumnModal() {
             onChange={(e) => setColumnName(e.target.value)}
           />
         </div>
-        <button type="submit" className={`modal-form-btn ${loading ? "btn-loading" : ""}`}>
+        <Button type="submit" disabled={loading}>
           Save
-        </button>
+        </Button>
       </form>
     </Modal>
   )

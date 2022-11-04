@@ -12,6 +12,7 @@ import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'src/lib/firebase';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 interface Props {
   board: Board;
@@ -62,13 +63,14 @@ export default function EditBoard({ board }: Props) {
             formData={{ board, columns, tasks }} 
           />
         </div>
-        <button 
-          className={`bg-red-500 rounded-sm flex items-center justify-center gap-2 py-2 px-4 font-medium transition-colors hover:bg-red-600 ${loading ? "btn-loading" : " "}`}
+        <Button 
+          variant="danger"
+          disabled={loading}
           onClick={trigger}
         >
           <FaTrash />
           Delete
-        </button>
+        </Button>
       </div>
     </Modal>
   )

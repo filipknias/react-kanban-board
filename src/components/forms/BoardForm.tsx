@@ -10,6 +10,7 @@ import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { User } from 'src/redux/features/authSlice';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 interface FormData {
   board: Board;
@@ -198,16 +199,17 @@ export default function BoardForm({ formData, action, onSuccess }: Props) {
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <button 
-          type="button" 
-          className={`modal-form-light-btn ${loading ? "btn-loading" : " "}`}
+        <Button 
+          type="button"
+          variant="secondary"
+          disabled={loading}
           onClick={addNewColumn}
         >
           Add New Column
-        </button>
-        <button type="submit" className={`modal-form-btn ${loading ? "btn-loading" : ""}`}>
+        </Button>
+        <Button type="submit" disabled={loading}>
           Save
-        </button>
+        </Button>
       </div>
     </form>
   )

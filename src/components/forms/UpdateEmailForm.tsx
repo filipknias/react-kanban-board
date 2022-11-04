@@ -7,6 +7,7 @@ import { updateEmail as updateEmailReduxAction } from 'src/redux/features/authSl
 import { useAppDispatch } from 'src/redux/hooks';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function UpdateEmailForm() {
   const [email, setEmail] = useState<string>(auth.currentUser?.email || "");
@@ -56,12 +57,9 @@ export default function UpdateEmailForm() {
         placeholder="E-mail address"
         required
       />
-      <button
-        type="submit"
-        className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-      >
+      <Button type="submit" disabled={loading}>
         Update e-mail
-      </button>
+      </Button>
     </form>
   )
 }

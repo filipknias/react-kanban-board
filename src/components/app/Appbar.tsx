@@ -6,6 +6,7 @@ import { openModal } from "src/redux/features/modalsSlice";
 import EditBoardModal from 'src/components/modals/EditBoardModal';
 import MobileMenu from "src/components/app/MobileMenu";
 import { useState } from 'react';
+import Button from "src/components/common/Button";
 
 export default function Appbar() {
   const { board } = useSelectedBoard();
@@ -26,20 +27,14 @@ export default function Appbar() {
       </div>
       {board && (
         <div className="flex gap-5">
-          <button 
-            className="bg-purple-600 rounded-sm p-3 text-white flex items-center gap-2 transition-colors hover:bg-purple-700 font-medium"
-            onClick={() => dispatch(openModal(<AddTaskModal />))}
-          >
+          <Button onClick={() => dispatch(openModal(<AddTaskModal />))}>
             <FaPlus />
             <span className="hidden lg:block">Add Task</span>
-          </button>
-          <button 
-            className="bg-purple-600 rounded-sm p-3 text-white flex items-center gap-2 transition-colors hover:bg-purple-700 font-medium"
-            onClick={() => dispatch(openModal(<EditBoardModal board={board} />))}  
-          >
+          </Button>
+          <Button onClick={() => dispatch(openModal(<EditBoardModal board={board} />))}>
             <FaCog />
             <span className="hidden lg:block">Options</span>
-          </button>
+          </Button>
         </div>  
       )}
     </div>

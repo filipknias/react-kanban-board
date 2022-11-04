@@ -5,6 +5,7 @@ import { updatePassword } from 'firebase/auth';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function UpdatePasswordForm() {
   const [newPassword, setNewPassword] = useState<string>('');
@@ -56,12 +57,9 @@ export default function UpdatePasswordForm() {
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
       />
-      <button
-        type="submit"
-        className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-      >
+      <Button type="submit" disabled={loading}>
         Update password
-      </button>
+      </Button>
     </form>
   )
 }

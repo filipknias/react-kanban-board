@@ -5,6 +5,7 @@ import { auth } from 'src/lib/firebase';
 import useAsync from 'src/hooks/useAsync';
 import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 interface Props {
   onSuccess: () => void;
@@ -45,9 +46,9 @@ export default function ReauthenticateForm({ onSuccess }: Props) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button type="submit" className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : ""}`}>
+      <Button type="submit" disabled={loading}>
         Submit
-      </button>
+      </Button>
     </form>
   )
 }
