@@ -3,7 +3,7 @@ import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from 'src/lib/firebase';
 import useAsync from 'src/hooks/useAsync';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 
 interface Props {

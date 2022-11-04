@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
-import GoogleButton from 'src/components/utilities/GoogleButton';
+import GoogleButton from 'src/components/common/GoogleButton';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from 'src/lib/firebase';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
 import routes from 'src/utilities/routes';
 import useAsync from 'src/hooks/useAsync';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormContainer from 'src/components/forms/FormContainer';
 import FormMessage from 'src/components/forms/FormMessage';
 

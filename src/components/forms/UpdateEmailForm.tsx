@@ -5,7 +5,7 @@ import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { updateEmail } from 'firebase/auth';
 import { updateEmail as updateEmailReduxAction } from 'src/redux/features/authSlice';
 import { useAppDispatch } from 'src/redux/hooks';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 
 export default function UpdateEmailForm() {

@@ -1,4 +1,4 @@
-import Logo from 'src/components/utilities/Logo';
+import Logo from 'src/components/common/Logo';
 import LoginForm from 'src/components/forms/LoginForm';
 
 export default function Login() {

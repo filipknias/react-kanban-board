@@ -6,7 +6,7 @@ import { db, timestamp } from 'src/lib/firebase';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { hideModal } from 'src/redux/features/modalsSlice';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 
 export default function AddColumnModal() {

@@ -8,7 +8,7 @@ import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { User } from 'src/redux/features/authSlice';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 
 interface FormData {

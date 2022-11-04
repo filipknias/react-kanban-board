@@ -1,7 +1,7 @@
-import Logo from 'src/components/utilities/Logo';
+import Logo from 'src/components/common/Logo';
 import BoardsList from 'src/components/app/BoardsList';
 import { useAppSelector } from 'src/redux/hooks';
-import NavigationAuthLinks from 'src/components/utilities/NavigationAuthLinks';
+import NavigationAuthLinks from 'src/components/common/NavigationAuthLinks';
 
 export default function Sidebar() {
   const { boards } = useAppSelector((state) => state.dashboard);

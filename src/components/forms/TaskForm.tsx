@@ -7,7 +7,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { db, timestamp } from 'src/lib/firebase';
 import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { addDoc, collection, updateDoc, doc } from 'firebase/firestore';
-import TextInput from 'src/components/utilities/TextInput';
+import TextInput from 'src/components/common/TextInput';
 import FormMessage from 'src/components/forms/FormMessage';
 
 interface Props {

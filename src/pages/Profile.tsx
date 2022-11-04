@@ -1,4 +1,4 @@
-import Logo from 'src/components/utilities/Logo';
+import Logo from 'src/components/common/Logo';
 import UpdateProfileForm from 'src/components/forms/UpdateProfileForm';
 
 export default function Profile() {

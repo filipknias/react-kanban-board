@@ -1,4 +1,4 @@
-import Logo from 'src/components/utilities/Logo';
+import Logo from 'src/components/common/Logo';
 import RegisterForm from 'src/components/forms/RegisterForm';
 
 export default function Register() {

@@ -1,10 +1,10 @@
-import Logo from 'src/components/utilities/Logo';
+import Logo from 'src/components/common/Logo';
 import BoardsList from 'src/components/app/BoardsList';
 import { useAppSelector } from 'src/redux/hooks';
 import { BsXLg } from 'react-icons/bs';
 import { useEffect, useRef } from 'react';
 import useClickOutiside from 'src/hooks/useClickOutiside';
-import NavigationAuthLinks from 'src/components/utilities/NavigationAuthLinks';
+import NavigationAuthLinks from 'src/components/common/NavigationAuthLinks';
 
 interface Props {
   open: boolean;
