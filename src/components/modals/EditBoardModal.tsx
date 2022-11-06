@@ -1,16 +1,18 @@
-import Modal from "./Modal";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import BoardForm from "../forms/BoardForm";
-import useSelectedBoard from '../../hooks/useSelectedBoard';
-import { Board } from '../../utilities/types';
-import { hideModal } from '../../redux/features/modalsSlice';
+import Modal from "src/components/modals/Modal";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import BoardForm from "src/components/forms/BoardForm";
+import useSelectedBoard from 'src/hooks/useSelectedBoard';
+import { Board } from 'src/utilities/types';
+import { hideModal } from 'src/redux/features/modalsSlice';
 import { FaTrash } from 'react-icons/fa';
-import useAsync from '../../hooks/useAsync';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import useAsync from 'src/hooks/useAsync';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { useEffect } from 'react';
-import { setSelectedBoardId } from '../../redux/features/dashboardSlice';
+import { setSelectedBoardId } from 'src/redux/features/dashboardSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
+import { db } from 'src/lib/firebase';
+import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 interface Props {
   board: Board;
@@ -53,7 +55,7 @@ export default function EditBoard({ board }: Props) {
         <div className="flex flex-col gap-3">
           <h1 className="text-lg font-medium">Edit board</h1>
           {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+            <FormMessage variant="error">{formatFirebaseError(error)}</FormMessage>
           )}
           <BoardForm 
             action="update"
@@ -61,13 +63,14 @@ export default function EditBoard({ board }: Props) {
             formData={{ board, columns, tasks }} 
           />
         </div>
-        <button 
-          className={`bg-red-500 rounded-sm flex items-center justify-center gap-2 py-2 px-4 font-medium transition-colors hover:bg-red-600 ${loading ? "btn-loading" : " "}`}
+        <Button 
+          variant="danger"
+          disabled={loading}
           onClick={trigger}
         >
           <FaTrash />
           Delete
-        </button>
+        </Button>
       </div>
     </Modal>
   )

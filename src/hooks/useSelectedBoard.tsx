@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { Board, Column, Task } from '../utilities/types';
-import { useAppSelector } from '../redux/hooks';
+import { Board, Column, Task } from 'src/utilities/types';
+import { useAppSelector } from 'src/redux/hooks';
 
 export default function useSelectedBoard() {
   const { selectedBoardId, boards, columns, tasks } = useAppSelector((state) => state.dashboard);

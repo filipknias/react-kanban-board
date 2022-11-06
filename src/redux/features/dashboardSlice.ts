@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Board, Column, Task } from '../../utilities/types';
+import { Board, Column, Task } from 'src/utilities/types';
 
 interface DashboardState {
   selectedBoardId: string|null;

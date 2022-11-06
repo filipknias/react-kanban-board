@@ -1,10 +1,13 @@
 import { useState, useEffect, FormEvent } from 'react';
-import useAsync from '../../hooks/useAsync';
-import { auth } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import useAsync from 'src/hooks/useAsync';
+import { auth } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { updateEmail } from 'firebase/auth';
-import { updateEmail as updateEmailReduxAction } from '../../redux/features/authSlice';
-import { useAppDispatch } from '../../redux/hooks';
+import { updateEmail as updateEmailReduxAction } from 'src/redux/features/authSlice';
+import { useAppDispatch } from 'src/redux/hooks';
+import TextInput from 'src/components/common/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function UpdateEmailForm() {
   const [email, setEmail] = useState<string>(auth.currentUser?.email || "");
@@ -41,26 +44,22 @@ export default function UpdateEmailForm() {
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <label htmlFor="email" className="font-medium">Update E-mail Address</label>
       {errorMessage && (
-        <div className="auth-form-error-message">{errorMessage}</div>
+        <FormMessage variant="error">{errorMessage}</FormMessage>
       )}
       {success && (
-        <div className="auth-form-success-message">Your e-mail address has changed</div>
+        <FormMessage variant="success">Your e-mail address has changed</FormMessage>
       )}
-      <input
+      <TextInput
         id="email"
-        type="text"
-        className="text-input"
+        type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="E-mail address"
         required
       />
-      <button
-        type="submit"
-        className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-      >
+      <Button type="submit" disabled={loading}>
         Update e-mail
-      </button>
+      </Button>
     </form>
   )
 }

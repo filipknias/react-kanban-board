@@ -1,5 +1,5 @@
-import Modal from './Modal';
-import { useAppSelector } from '../../redux/hooks';
+import Modal from 'src/components/modals/Modal';
+import { useAppSelector } from 'src/redux/hooks';
 
 export default function ModalManager() {
   const openedModal = useAppSelector((state) => state.modals.openedModal);

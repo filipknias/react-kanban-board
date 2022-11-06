@@ -1,11 +1,14 @@
-import Modal from "./Modal"
+import Modal from "src/components/modals/Modal"
 import { useEffect, useState } from 'react';
-import useAsync from '../../hooks/useAsync';
+import useAsync from 'src/hooks/useAsync';
 import { addDoc, collection } from 'firebase/firestore';
-import { db, timestamp } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
+import { db, timestamp } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
+import TextInput from 'src/components/common/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function AddColumnModal() {
   const [columnName, setColumnName] = useState('');
@@ -40,20 +43,19 @@ export default function AddColumnModal() {
         <h1 className="text-lg font-medium">Add Column</h1>
         <div className="flex flex-col gap-3">
           {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
+            <FormMessage variant="error">{formatFirebaseError(error)}</FormMessage>
           )}
-          <input 
+          <TextInput
             type="text"
-            className="text-input"
             placeholder="Column name"
             required
             value={columnName}
             onChange={(e) => setColumnName(e.target.value)}
           />
         </div>
-        <button type="submit" className={`modal-form-btn ${loading ? "btn-loading" : ""}`}>
+        <Button type="submit" disabled={loading}>
           Save
-        </button>
+        </Button>
       </form>
     </Modal>
   )

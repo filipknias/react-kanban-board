@@ -1,7 +1,7 @@
-import Modal from "./Modal";
-import { useAppDispatch } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
-import BoardForm from '../forms/BoardForm';
+import Modal from "src/components/modals/Modal";
+import { useAppDispatch } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
+import BoardForm from 'src/components/forms/BoardForm';
 
 export default function CreateBoardModal() {
   const dispatch = useAppDispatch();

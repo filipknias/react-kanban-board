@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
-import GoogleButton from '../utilities/GoogleButton';
+import GoogleButton from 'src/components/common/GoogleButton';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { auth } from 'src/lib/firebase';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
 import { Link } from 'react-router-dom';
-import routes from '../../utilities/routes';
-import useAsync from '../../hooks/useAsync';
+import routes from 'src/utilities/routes';
+import useAsync from 'src/hooks/useAsync';
+import TextInput from 'src/components/common/TextInput';
+import FormContainer from 'src/components/forms/FormContainer';
+import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 const provider = new GoogleAuthProvider();
 
@@ -27,46 +31,45 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="auth-form-container" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-10">
-        <div className="flex items-center justify-center gap-3">
-          <FaUserAlt />
-          <h1 className="font-bold text-xl">Sign in to your account</h1>
+    <FormContainer>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-10">
+          <div className="flex items-center justify-center gap-3">
+            <FaUserAlt />
+            <h1 className="font-bold text-xl">Sign in to your account</h1>
+          </div>
+          <div className="flex flex-col gap-5">
+            {error && (
+              <FormMessage variant="error">
+                {formatFirebaseError(error)}
+              </FormMessage>
+            )}
+            <TextInput
+              type="email"
+              placeholder="E-mail address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <TextInput
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Link to={routes.register} className="font-medium text-purple-500 block w-min whitespace-nowrap">
+              Create new account
+            </Link>
+          </div>
+          <div className="flex flex-col gap-5">
+            <Button type="submit" disabled={loading}>
+              Submit
+            </Button>
+            <GoogleButton onClick={handleGoogleLogin} />
+          </div>
         </div>
-        <div className="flex flex-col gap-5">
-          {error && (
-            <div className="auth-form-error-message">{formatFirebaseError(error)}</div>
-          )}
-          <input
-            type="email"
-            className="text-input"
-            placeholder="E-mail address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            className="text-input"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Link to={routes.register} className="auth-link">
-            Create new account
-          </Link>
-        </div>
-        <div className="flex flex-col gap-5">
-          <button 
-            type="submit"
-            className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-          >
-            Submit
-          </button>
-          <GoogleButton onClick={handleGoogleLogin} />
-        </div>
-      </div>
-    </form>
+      </form>
+    </FormContainer>
   )
 };

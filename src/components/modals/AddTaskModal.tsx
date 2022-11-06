@@ -1,7 +1,7 @@
-import Modal from "./Modal"
-import { useAppDispatch } from '../../redux/hooks';
-import { hideModal } from '../../redux/features/modalsSlice';
-import TaskForm from '../forms/TaskForm';
+import Modal from "src/components/modals/Modal"
+import { useAppDispatch } from 'src/redux/hooks';
+import { hideModal } from 'src/redux/features/modalsSlice';
+import TaskForm from 'src/components/forms/TaskForm';
 
 export default function AddTaskModal() {
   const dispatch = useAppDispatch();

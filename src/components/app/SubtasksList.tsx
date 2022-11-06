@@ -1,7 +1,7 @@
-import { Subtask } from "../../utilities/types";
+import { Subtask } from "src/utilities/types";
 import { useState, useEffect } from 'react';
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from '../../lib/firebase';
+import { db } from 'src/lib/firebase';
 
 interface Props {
   subtasks: Subtask[];
@@ -9,22 +9,22 @@ interface Props {
 }
 
 export default function SubtasksList({ subtasks, taskId }: Props) {
-  const [localSubtasks, setLocalSubtasks] = useState<Subtask[]>(subtasks);
+  const [subtasksList, setSubtasksList] = useState<Subtask[]>(subtasks);
 
   useEffect(() => {
     updateSubtasksDocs();
-  }, [localSubtasks]);
+  }, [subtasksList]);
 
   const updateSubtasksDocs = async () => {
     const taskRef = doc(db, "tasks", taskId);
 
     await updateDoc(taskRef, {
-      subtasks: localSubtasks,
+      subtasks: subtasksList,
     });
   };
 
-  const updateLocalSubtask = (idx: number) => {
-    setLocalSubtasks((prevSubtasks) => {
+  const updateSubtasksList = (idx: number) => {
+    setSubtasksList((prevSubtasks) => {
       return prevSubtasks.map((task) => {
         if (task.idx === idx) return { ...task, done: !task.done };
         return task;
@@ -36,16 +36,24 @@ export default function SubtasksList({ subtasks, taskId }: Props) {
     <ul className="flex flex-col gap-2">
       {subtasks.map((subtask) => (
         <li 
+<<<<<<< HEAD
           className="bg-gray-900 rounded-md p-2 flex items-center gap-2" 
+=======
+          className="bg-gray-900 rounded-md p-2 flex items-center gap-2 transition-colors" 
+>>>>>>> dev
           key={subtask.idx}
         >
           <input 
             type="checkbox" 
-            checked={localSubtasks[subtask.idx].done} 
+            checked={subtasksList[subtask.idx].done} 
             id={subtask.idx.toString()}
+<<<<<<< HEAD
             onChange={() => updateLocalSubtask(subtask.idx)}
+=======
+            onChange={() => updateSubtasksList(subtask.idx)} 
+>>>>>>> dev
           />
-          <label htmlFor={subtask.idx.toString()} className={`font-medium ${localSubtasks[subtask.idx].done ? 'line-through' : ''}`}>
+          <label htmlFor={subtask.idx.toString()} className={`font-medium ${subtasksList[subtask.idx].done ? 'line-through' : ''}`}>
             {subtask.name}
           </label>
         </li>

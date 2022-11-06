@@ -1,8 +1,11 @@
 import { useState, useEffect, FormEvent } from 'react';
-import useAsync from '../../hooks/useAsync';
-import { auth } from '../../lib/firebase';
+import useAsync from 'src/hooks/useAsync';
+import { auth } from 'src/lib/firebase';
 import { updatePassword } from 'firebase/auth';
-import { formatFirebaseError } from '../../helpers/formatFirebaseError';
+import { formatFirebaseError } from 'src/helpers/formatFirebaseError';
+import TextInput from 'src/components/common/TextInput';
+import FormMessage from 'src/components/forms/FormMessage';
+import Button from "src/components/common/Button";
 
 export default function UpdatePasswordForm() {
   const [newPassword, setNewPassword] = useState<string>('');
@@ -34,34 +37,29 @@ export default function UpdatePasswordForm() {
     <form className="flex flex-col gap-3" onSubmit={handlePasswordSubmit}>
       <label htmlFor="password" className="font-medium">Update Password</label>
       {passwordError && (
-        <div className="auth-form-error-message">{passwordError}</div>
+        <FormMessage variant="error">{passwordError}</FormMessage>
       )}
       {success && (
-        <div className="auth-form-success-message">Your password has changed</div>
+        <FormMessage variant="success">Your password has changed</FormMessage>
       )}
-      <input
+      <TextInput
         id="password"
         type="password"
-        className="text-input"
         placeholder="New password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
         required
       />
-      <input
+      <TextInput 
         type="password"
-        className="text-input"
         placeholder="Confirm password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
       />
-      <button
-        type="submit"
-        className={`w-full bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-md font-medium ${loading ? "btn-loading" : " "}`}
-      >
+      <Button type="submit" disabled={loading}>
         Update password
-      </button>
+      </Button>
     </form>
   )
 }
